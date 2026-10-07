@@ -62,6 +62,10 @@ public partial class App : Application
      if (session.Options.ShowStandaloneWindow || session.Options.DisplayTransport != "controller") throw new InvalidOperationException("Configure embedded controller mode before this explicit real-device test.");
      await viewModel.StartCommand.ExecuteAsync(null);
      if (!viewModel.InputReady) throw new InvalidOperationException(viewModel.Log);
+     if (e.Args.Contains("--apk-test")) {
+      await Task.Delay(2000);
+      await viewport.CaptureDecodedFrameAsync(Path.GetFullPath(e.Args[1]) + ".startup.frame.png");
+     }
      viewModel.CommitSelection = _ => Task.FromResult(true); // Test APK must not replace persistent library metadata.
      await viewModel.ImportFilesAsync([Path.GetFullPath(e.Args[2])], CancellationToken.None);
      if (viewModel.Selection is null) throw new InvalidOperationException(viewModel.Log);

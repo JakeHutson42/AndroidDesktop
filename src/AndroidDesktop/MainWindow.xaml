@@ -33,7 +33,7 @@
                   <StackPanel>
                     <TextBlock Text="APK library" Style="{StaticResource PanelHeading}" />
                     <Button Content="＋  Open APK" Style="{StaticResource PrimaryButton}" Command="{Binding OpenApkCommand}" Margin="0,0,0,12" />
-                    <TextBlock Text="Drop a standalone APK to add it" Style="{StaticResource SecondaryText}" Margin="0,0,0,16" />
+                    <TextBlock Text="Drop an APK or APKM bundle to add it" Style="{StaticResource SecondaryText}" Margin="0,0,0,16" />
                   </StackPanel>
                   <Grid Grid.Row="1">
                     <ListBox ItemsSource="{Binding Library}" SelectedItem="{Binding LibrarySelection}" AutomationProperties.Name="APK library" MaxHeight="280" x:Name="ApkLibraryList">

@@ -8,14 +8,52 @@ using System.Globalization;
 
 namespace AndroidDesktop.Services;
 
-public sealed class ApkInstallService(IAndroidToolService tools, PrototypeOptions options) : IApkInstallService
+public sealed class ApkInstallService(IAndroidToolService tools, PrototypeOptions options) : IApkInstallService, IDisposable
 {
+    private string? _bundleDirectory;
+    private readonly List<(string Path, string[] Abis)> _splits = [];
+    private string[] _installationFiles = [];
+    public void Dispose() { if (_bundleDirectory is not null && Directory.Exists(_bundleDirectory)) Directory.Delete(_bundleDirectory, true); }
+    public static string[] ExtractBundle(string source, string destination)
+    {
+        using var zip = ZipFile.OpenRead(source);
+        var entries = zip.Entries.Where(e => e.FullName.EndsWith(".apk", StringComparison.OrdinalIgnoreCase)).ToArray();
+        if (entries.Length is < 2 or > 64 || entries.Sum(e => e.Length) > 2L * 1024 * 1024 * 1024
+            || entries.Any(e => e.FullName != Path.GetFileName(e.FullName) || e.FullName.Contains('\\'))
+            || entries.Select(e => e.FullName).Distinct(StringComparer.OrdinalIgnoreCase).Count() != entries.Length
+            || entries.Count(e => e.FullName == "base.apk") != 1)
+            throw new InvalidDataException("Invalid APKM bundle. Expected one base.apk and flat split APK files (maximum 2 GB)." );
+        Directory.CreateDirectory(destination);
+        foreach (var entry in entries) entry.ExtractToFile(Path.Combine(destination, entry.FullName));
+        return entries.Select(e => Path.Combine(destination, e.FullName)).ToArray();
+    }
     private Task<ToolResult> AdbAsync(CancellationToken token, params string[] arguments) =>
         tools.RunAsync(options.Adb, new[] { "-s", options.Serial }.Concat(arguments), TimeSpan.FromMinutes(2), token);
 
     public async Task<ApkMetadata> InspectAsync(string path, CancellationToken token)
     {
         path = ApkImportService.ValidateFiles([path]);
+        if (Path.GetExtension(path).Equals(".apkm", StringComparison.OrdinalIgnoreCase))
+        {
+            _bundleDirectory = Path.Combine(Path.GetTempPath(), "AndroidDesktop-apkm-" + Guid.NewGuid().ToString("N"));
+            var files = await Task.Run(() => ExtractBundle(path, _bundleDirectory), token);
+            var baseFile = files.Single(f => Path.GetFileName(f) == "base.apk");
+            var main = await InspectApkAsync(baseFile, true, token);
+            foreach (var split in files.Where(f => f != baseFile)) {
+                var metadata = await InspectApkAsync(split, true, token);
+                if (metadata.PackageId != main.PackageId || metadata.VersionCode != main.VersionCode)
+                    throw new InvalidDataException("Split APK identity or version differs from base.apk.");
+                _splits.Add((split, metadata.NativeAbis));
+            }
+            _installationFiles = [baseFile];
+            await using var source = File.OpenRead(path);
+            return main with { Path = path, NativeAbis = main.NativeAbis.Concat(_splits.SelectMany(s => s.Abis)).Distinct().ToArray(),
+                Sha256 = Convert.ToHexString(await SHA256.HashDataAsync(source, token)) };
+        }
+        return await InspectApkAsync(path, false, token);
+    }
+    private async Task<ApkMetadata> InspectApkAsync(string path, bool bundled, CancellationToken token)
+    {
         string[] abis;
         using (var zip = ZipFile.OpenRead(path))
         {
@@ -33,8 +71,8 @@ public sealed class ApkInstallService(IAndroidToolService tools, PrototypeOption
         var versionCode = long.Parse(await Analyze("manifest", "version-code"), CultureInfo.InvariantCulture);
         var versionName = await Analyze("manifest", "version-name");
         var manifest = await Analyze("manifest", "print");
-        if (Regex.IsMatch(manifest, "\\bsplit\\s*=|isSplitRequired\\s*=\\s*\"true\"|isFeatureSplit\\s*=\\s*\"true\""))
-            throw new InvalidDataException("This APK belongs to a split package. Select a standalone APK; split sets and separate OBB data are unsupported.");
+        if (!bundled && Regex.IsMatch(manifest, "\\bsplit\\s*=|isSplitRequired\\s*=\\s*\"true\"|isFeatureSplit\\s*=\\s*\"true\""))
+            throw new InvalidDataException("This APK is part of a split package. Open the original APKM bundle instead of extracting base.apk. Separate OBB data is unsupported.");
         var xml = XDocument.Parse(manifest);
         XNamespace android = "http://schemas.android.com/apk/res/android";
         var major = (string?)xml.Root?.Attribute(android + "versionCodeMajor");
@@ -63,6 +101,10 @@ public sealed class ApkInstallService(IAndroidToolService tools, PrototypeOption
         var sdk = int.Parse((await AdbAsync(token, "shell", "getprop", "ro.build.version.sdk")).RequireSuccess());
         var abis = (await AdbAsync(token, "shell", "getprop", "ro.product.cpu.abilist")).RequireSuccess().Split(',');
         CheckCompatibility(apk, sdk, abis);
+        if (_bundleDirectory is not null) {
+            var abi = abis.FirstOrDefault(a => _splits.Any(s => s.Abis.Contains(a)));
+            _installationFiles = _installationFiles.Take(1).Concat(_splits.Where(s => s.Abis.Length == 0 || abi is not null && s.Abis.Contains(abi)).Select(s => s.Path)).ToArray();
+        }
     }
     public async Task<bool> IsInstalledAsync(ApkMetadata apk, CancellationToken token)
     {
@@ -81,13 +123,14 @@ public sealed class ApkInstallService(IAndroidToolService tools, PrototypeOption
     }
     public async Task InstallAsync(ApkMetadata apk, CancellationToken token)
     {
-        var install = await AdbAsync(token, "install", "-r", apk.Path);
+        var install = _bundleDirectory is null ? await AdbAsync(token, "install", "-r", apk.Path)
+            : await AdbAsync(token, new[] { "install-multiple", "-r" }.Concat(_installationFiles).ToArray());
         var text = install.Output + install.Error;
         if (install.ExitCode != 0 || !install.Output.Contains("Success", StringComparison.Ordinal))
         {
             var reason = text.Contains("UPDATE_INCOMPATIBLE") ? "Signature conflict. Existing package data was not removed." :
                 text.Contains("VERSION_DOWNGRADE") ? "Android rejected a downgrade. Existing package data was not removed." :
-                text.Contains("MISSING_SPLIT") ? "APK requires missing split files; only standalone APKs are supported." :
+                text.Contains("MISSING_SPLIT") ? "Required split APKs are missing. Import the complete original APKM bundle." :
                 text.Contains("INSUFFICIENT_STORAGE") ? "Android device storage is insufficient. Existing application data was retained." :
                 text.Contains("NO_MATCHING_ABIS") || text.Contains("OLDER_SDK") ? "Android rejected this APK's device compatibility. Existing application data was retained." :
                 "Android rejected the installation; no uninstall or data reset was attempted.";

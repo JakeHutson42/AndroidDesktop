@@ -14,7 +14,7 @@ public sealed class ApkImportTests : IDisposable
     [Theory]
     [InlineData("game.aab")][InlineData("game.apks")][InlineData("game.xapk")][InlineData("game.obb")]
     public void UnsupportedFormatsExplainTheBoundary(string file)
-        => Assert.Contains("standalone", Assert.Throws<InvalidDataException>(() => ApkImportService.ValidateFiles([file])).Message);
+        => Assert.Contains(".apkm", Assert.Throws<InvalidDataException>(() => ApkImportService.ValidateFiles([file])).Message);
     [Fact] public void MultipleFilesAndMissingSourcesAreRejected()
     {
         Assert.Throws<InvalidDataException>(() => ApkImportService.ValidateFiles([_path, _path]));

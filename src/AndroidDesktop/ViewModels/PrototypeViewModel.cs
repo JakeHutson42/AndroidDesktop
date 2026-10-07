@@ -103,7 +103,7 @@ public partial class PrototypeViewModel : ObservableObject
     {
         if (!CanLaunchLibrary()) return;
         var package = LibrarySelection!.Apk.PackageId;
-        var picker = new OpenFileDialog { Filter = "Standalone Android APK (*.apk)|*.apk", Multiselect = false };
+        var picker = new OpenFileDialog { Filter = "Android apps (*.apk;*.apkm)|*.apk;*.apkm", Multiselect = false };
         if (picker.ShowDialog() == true) await RunAsync(ct => OpenAsync(picker.FileName, false, ct, package), token);
     }
     private bool CanSend() => CanOpen() && InputReady && _session.HasOwnedEmulator && _session.State is SessionState.Ready or SessionState.Running;
@@ -143,7 +143,7 @@ public partial class PrototypeViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanOpen), IncludeCancelCommand = true)]
     private async Task OpenApkAsync(CancellationToken token)
     {
-        var picker = new OpenFileDialog { Filter = "Standalone Android APK (*.apk)|*.apk", Multiselect = false };
+        var picker = new OpenFileDialog { Filter = "Android apps (*.apk;*.apkm)|*.apk;*.apkm", Multiselect = false };
         if (picker.ShowDialog() == true) await ImportFilesAsync([picker.FileName], token);
     }
     [RelayCommand(CanExecute = nameof(CanOpen), IncludeCancelCommand = true)]

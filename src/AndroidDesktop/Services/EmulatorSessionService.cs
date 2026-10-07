@@ -187,7 +187,8 @@ public sealed class EmulatorSessionService(PrototypeOptions options, IAndroidToo
         await OperationAsync(async ct => {
             if (!HasOwnedEmulator || State is not (SessionState.Ready or SessionState.Running)) throw new InvalidOperationException("Device must be ready to open an APK.");
             SetState(SessionState.Installing);
-            var importer = new ApkImportService(new ApkInstallService(tools, options));
+            using var installer = new ApkInstallService(tools, options);
+            var importer = new ApkImportService(installer);
             // Direct progress preserves session message ordering without a second UI queue.
             selected = await importer.OpenAsync(apkPath, _deviceId!, previous, relaunch, commit, new SessionProgress(Report), ct, lookup, expectedPackage);
             evidence.TryWrite("apk", selected);

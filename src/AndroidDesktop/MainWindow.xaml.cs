@@ -60,7 +60,7 @@ public partial class MainWindow : Window
   e.Handled = true;
   if (!_viewModel.CanAcceptDrop) { _viewModel.AddMessage("Wait for the current operation or cancel it before opening another APK."); return; }
   if (e.Data.GetData(DataFormats.FileDrop) is string[] files) await _viewModel.ImportFilesCommand.ExecuteAsync(files);
-  else _viewModel.AddMessage("Drop exactly one standalone .apk file from Explorer.");
+  else _viewModel.AddMessage("Drop one APK or APKM bundle from Explorer.");
  }
  private void OnKeyDown(object sender, KeyEventArgs e)
  {

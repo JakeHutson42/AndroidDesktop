@@ -17,9 +17,9 @@ public sealed class ApkImportService(IApkInstallService installer)
     public static string ValidateFiles(IEnumerable<string> paths)
     {
         var files = paths.ToArray();
-        if (files.Length != 1) throw new InvalidDataException("Open or drop exactly one standalone .apk file. Multiple files, split sets and separate OBB data are unsupported.");
-        if (!Path.GetExtension(files[0]).Equals(".apk", StringComparison.OrdinalIgnoreCase))
-            throw new InvalidDataException("Only standalone .apk files are supported. AAB, APKS, XAPK, split sets and separate OBB data cannot be imported.");
+        if (files.Length != 1) throw new InvalidDataException("Open or drop one APK or APKM bundle. Keep split files together in the original APKM bundle.");
+        if (!new[] { ".apk", ".apkm" }.Contains(Path.GetExtension(files[0]), StringComparer.OrdinalIgnoreCase))
+            throw new InvalidDataException("Choose an .apk or .apkm file. AAB, APKS, XAPK and separate OBB data are unsupported.");
         var path = Path.GetFullPath(files[0]);
         if (!File.Exists(path)) throw new FileNotFoundException("The APK source is missing. Select its library entry and use Locate APK / update, or use Open APK to import a file.", path);
         return path;
