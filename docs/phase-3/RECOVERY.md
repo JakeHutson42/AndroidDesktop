@@ -1,0 +1,11 @@
+# Recovery without discarding Android data
+
+- Missing tool/image/Java/WebView2: open Setup, correct the official dependency, Save paths and Check prerequisites. Restart after required Windows virtualization reboot. Do not rebuild an existing AVD.
+- Three-minute boot timeout or emulator crash: inspect local diagnostics, try Stop, then Start. Cold boot skips Quick Boot but retains disks. Check disk space, compatible image and acceleration. Force stop is enabled only after graceful shutdown fails; it targets this application's owned process handles.
+- Display/gateway/WebView2 failure: stop interaction and use Connect display. A crashed WebView2 is recreated on reconnection; the Android device and selection remain. Check the diagnostic app reports zero held pointers before continuing. If no release channel remains, Stop safely and verify after restarting. Releases cannot be guaranteed across a total process/transport failure.
+- Cancelled/failed install: retry Open APK. Cancellation may occur after Android committed an update; the importer rechecks installed package/version on retry. Previous desktop selection is kept until successful launch/commit. No uninstall, data clear or forced downgrade is performed.
+- Signature conflict/downgrade/split/ABI/API/storage rejection: provide a compatible standalone APK or storage; do not delete game data to make an incompatible update fit.
+- Settings or evidence failure: read the footer/status. Fix storage/permissions, retry a save/export. Last-known-good settings recovery is reported; newer schemas are not overwritten. Evidence marked INCOMPLETE cannot establish acceptance. Support export is bounded to an 8 MiB evidence scan and marks truncation.
+- Close failure: wait for the active cancellation to settle, then Stop again. If graceful Stop fails, explicitly use Force stop and verify saved progress next launch. This never kills unrelated devices or the shared ADB server.
+
+Support export excludes Android disks, APKs, complete settings and discovery files; it sanitizes tokens and local paths. Review the ZIP before sharing. Keep raw local evidence private. Uninstall only removes installed program files/shortcuts: settings, selection and Android data remain under `%LOCALAPPDATA%/AndroidDesktop`.

@@ -1,0 +1,56 @@
+name: Windows candidate verification
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  candidate:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.303'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.10'
+      - name: Prepare locked build tools and viewport
+        shell: pwsh
+        run: |
+          npm install --global pnpm@11.19.0
+          if ($LASTEXITCODE) { throw 'pnpm preparation failed' }
+          ./scripts/Prepare-Phase0.ps1 -Python (Get-Command python).Source -PackageManager (Get-Command pnpm.cmd).Source
+          if ($LASTEXITCODE) { throw 'Preparation failed' }
+      - name: Locked restore and Release tests
+        shell: pwsh
+        run: |
+          dotnet restore AndroidDesktop.sln --locked-mode
+          if ($LASTEXITCODE) { throw 'Locked restore failed' }
+          dotnet test AndroidDesktop.sln -c Release --no-restore
+          if ($LASTEXITCODE) { throw 'Tests failed' }
+          node --test tools/viewport/test/*.test.mjs
+          if ($LASTEXITCODE) { throw 'Viewport tests failed' }
+          ./tools/gateway/.venv/Scripts/python.exe -m unittest discover -s tools/gateway/tests -v
+          if ($LASTEXITCODE) { throw 'Gateway contract tests failed' }
+      - name: Self-contained candidate and package contract
+        shell: pwsh
+        run: |
+          ./scripts/Publish-Candidate.ps1 -Python (Get-Command python).Source -OutputDirectory artifacts/publish-ci
+          ./scripts/Test-Package.ps1 -Directory artifacts/publish-ci
+          ./scripts/Prepare-InnoCompiler.ps1
+          ./scripts/Build-Installer.ps1 -PublishDirectory artifacts/publish-ci -Compiler artifacts/build-tools/inno/ISCC.exe
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AndroidDesktop-win-x64-unvalidated-candidate
+          path: |
+            artifacts/publish-ci.zip
+            artifacts/installer/*.exe
+          if-no-files-found: error
+      # Hardware emulator, game, WHPX/GPU, sound, touch, saves, soak and clean-PC
+      # validation are explicit local release gates, never inferred from this job.

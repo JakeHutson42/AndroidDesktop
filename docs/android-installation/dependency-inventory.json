@@ -1,0 +1,98 @@
+{
+  "distribution": "local installation only",
+  "java": "Temurin 21.0.12.1+1",
+  "channel": "stable",
+  "date": "2026-10-06",
+  "sdkTerms": "explicitly authorized by user",
+  "packages": [
+    {
+      "properties": [
+        "Pkg.Revision=23.0",
+        "Pkg.Path=cmdline-tools;23.0",
+        "Pkg.Desc=Android SDK Command-line Tools"
+      ],
+      "path": "cmdline-tools/latest"
+    },
+    {
+      "properties": [
+        "Pkg.UserSrc=false",
+        "Pkg.Revision=37.2.12",
+        "Pkg.Path=emulator",
+        "Pkg.Desc=Android Emulator",
+        "Pkg.BuildId=16428233"
+      ],
+      "path": "emulator"
+    },
+    {
+      "properties": [
+        "Pkg.UserSrc=false",
+        "Pkg.Revision=37.0.1"
+      ],
+      "path": "platform-tools"
+    },
+    {
+      "properties": [
+        "Pkg.Desc=System Image x86_64 with Google Play.",
+        "Pkg.Revision=14",
+        "Pkg.Dependencies=emulator#34.2.16",
+        "AndroidVersion.ApiLevel=34",
+        "AndroidVersion.ExtensionLevel=7",
+        "AndroidVersion.IsBaseSdk=true",
+        "SystemImage.Abi=x86_64",
+        "SystemImage.TagId=google_apis_playstore",
+        "SystemImage.TagDisplay=Google Play",
+        "SystemImage.GpuSupport=true",
+        "Addon.VendorId=google",
+        "Addon.VendorDisplay=Google Inc."
+      ],
+      "path": "system-images/android-34/google_apis_playstore/x86_64"
+    },
+    {
+      "properties": [
+        "Pkg.Desc=Android SDK Platform 14",
+        "Pkg.UserSrc=false",
+        "Platform.Version=14",
+        "Platform.CodeName=",
+        "Pkg.Revision=3",
+        "AndroidVersion.ApiLevel=34",
+        "AndroidVersion.ExtensionLevel=7",
+        "AndroidVersion.IsBaseSdk=true",
+        "Layoutlib.Api=15",
+        "Layoutlib.Revision=1",
+        "Platform.MinToolsRev=22"
+      ],
+      "path": "platforms/android-34"
+    },
+    {
+      "properties": [
+        "Pkg.UserSrc=false",
+        "Pkg.Revision=34.0.0",
+        "#Pkg.Revision=34.0.0 rc3"
+      ],
+      "path": "build-tools/34.0.0"
+    },
+    {
+      "properties": [
+        "Pkg.UserSrc=false",
+        "Pkg.Revision=36.0.0",
+        "#Pkg.Revision=36.0.0 rc5"
+      ],
+      "path": "build-tools/36.0.0"
+    }
+  ],
+  "displayMode": "embedded authenticated controller",
+  "javaArchiveSha256": "f9d6e191ab098c0d416e7d588a24420a8621cd2f4720dab2459b8b7b2d2d8b4e",
+  "embeddedRtc": "PERMISSION_DENIED",
+  "controllerDisplay": {
+    "framesInFlight": 1,
+    "maximumPixels": 4194304,
+    "deviceConcurrency": 1,
+    "protocol": "installed official EmulatorController; existing pinned protobuf bindings",
+    "browserAudio": true,
+    "audio": { "protocol": "authenticated EmulatorController streamAudio", "sampleRate": 48000, "channels": 2, "format": "S16LE", "maximumPacketBytes": 19200, "playbackBufferMs": 100, "packetsInFlight": 1, "enabledOnDemand": true, "newDependencies": [] },
+    "newDependencies": [],
+    "maximumFrameBytes": 8388608,
+    "maximumFramesPerSecond": 15,
+    "authentication": "existing token/discovery; loopback gateway session token; SDK allowlists unchanged"
+  }
+}

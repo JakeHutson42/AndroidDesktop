@@ -1,0 +1,8 @@
+{
+  "configured": true,
+  "androidBooted": true,
+  "runtimeIdentity": "{\"emulatorVersion\":\"Android emulator version 37.2.12.0 (build_id 16428233) (CL:N/A)\\r\\nCopyright (C) 2006-2024 The Android Open Source Project and many others.\\r\\nThis program is a derivative of the QEMU CPU emulator (www.qemu.org).\\r\\n\\r\\n  This software is licensed under the terms of the GNU General Public\\r\\n  License version 2, as published by the Free Software Foundation, and\\r\\n  may be copied, distributed, and modified under those terms.\\r\\n\\r\\n  This program is distributed in the hope that it will be useful,\\r\\n  but WITHOUT ANY WARRANTY; without even the implied warranty of\\r\\n  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\\r\\n  GNU General Public License for more details.\\r\\n\\r\\nINFO         | Android emulator version 37.2.12.0 (build_id 16428233) (CL:N/A)\\r\\nINFO         | Graphics backend: gfxstream\",\"avdConfigurationSha256\":\"FCA9DDC7506B399D1D6FB2DDE82822CC40B579FAE0F180EDFBAA7CAFD91C7E83\",\"guestMemoryMb\":\"2048\",\"guestCpuCores\":\"2\",\"ro.build.version.sdk\":\"34\",\"ro.product.cpu.abilist\":\"x86_64,arm64-v8a\",\"ro.build.fingerprint\":\"google/sdk_gphone64_x86_64/emu64xa:14/UE1A.230829.036.A4/12096271:user/release-keys\"}",
+  "diagnosticInstalledAndLaunched": "com.androiddesktop.diagnostic",
+  "rtcProbe": "failed: RTC service probe failed. Candidate remains unselected.\n{\"rtcRequestAccepted\": false, \"mediaVerified\": false, \"rpcStatus\": \"PERMISSION_DENIED\"}",
+  "gracefulStop": true
+}

@@ -1,0 +1,19 @@
+{
+  "shellRendered": true,
+  "shellMilliseconds": 337.4386,
+  "packagedViewportLoaded": true,
+  "shellChecks": {
+    "pages": [
+      "Device",
+      "Setup",
+      "Settings"
+    ],
+    "themeSwitchApplied": true,
+    "minimumBoundsRestored": true,
+    "setupCheckComplete": true
+  },
+  "browserVersion": "154.0.4258.53",
+  "viewportMode": "standard",
+  "androidConnected": false,
+  "mediaVerified": false
+}

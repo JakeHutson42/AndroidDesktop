@@ -1,0 +1,10 @@
+{
+  "embeddedFramesAndInputReady": true,
+  "media": "{\r\n  \u0022timestampMs\u0022: 16994.699999999255,\r\n  \u0022displayTransport\u0022: \u0022controller\u0022,\r\n  \u0022tracks\u0022: [\r\n    {\r\n      \u0022kind\u0022: \u0022video\u0022,\r\n      \u0022framesDecoded\u0022: 182,\r\n      \u0022decoderImplementation\u0022: \u0022PNG/canvas controller; no WebRTC audio\u0022,\r\n      \u0022bytesReceived\u0022: 112025161\r\n    }\r\n  ],\r\n  \u0022geometry\u0022: {\r\n    \u0022width\u0022: 1080,\r\n    \u0022height\u0022: 1920,\r\n    \u0022orientation\u0022: 0\r\n  },\r\n  \u0022muted\u0022: false,\r\n  \u0022audioTracks\u0022: [],\r\n  \u0022controllerAudio\u0022: {\r\n    \u0022enabled\u0022: true,\r\n    \u0022state\u0022: \u0022running\u0022,\r\n    \u0022packets\u0022: 435,\r\n    \u0022bytes\u0022: 858360,\r\n    \u0022peak\u0022: 0.0010986328125,\r\n    \u0022droppedSamples\u0022: 0,\r\n    \u0022underruns\u0022: 0,\r\n    \u0022bufferLimitMs\u0022: 100\r\n  },\r\n  \u0022totalVideoFrames\u0022: 177,\r\n  \u0022droppedVideoFrames\u0022: 94,\r\n  \u0022presentationIntervalMs\u0022: {\r\n    \u0022samples\u0022: 176,\r\n    \u0022p50\u0022: 79.90000000000146,\r\n    \u0022p95\u0022: 155.10000000000036,\r\n    \u0022p99\u0022: 184.89999999999964\r\n  },\r\n  \u0022note\u0022: \u0022Presentation callback intervals are not input latency or Android frame times\u0022\r\n}",
+  "diagnosticPackage": "com.androiddesktop.diagnostic",
+  "gracefulStop": true,
+  "separateEmulatorWindow": false,
+  "newTouchReceived": false,
+  "gamePerformanceVerified": false,
+  "audioVerified": false
+}

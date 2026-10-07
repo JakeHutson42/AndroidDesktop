@@ -1,0 +1,3 @@
+html,body { margin:0; height:100%; background:#101216; overflow:hidden; }
+#display { width:100%; height:100%; object-fit:contain; touch-action:none; outline:none; user-select:none; }
+

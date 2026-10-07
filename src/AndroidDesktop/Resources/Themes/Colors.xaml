@@ -1,0 +1,26 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <SolidColorBrush x:Key="BackgroundBrush" Color="#15181D"/>
+  <SolidColorBrush x:Key="PanelBrush" Color="#1C2026"/>
+  <SolidColorBrush x:Key="CardBrush" Color="#232830"/>
+  <SolidColorBrush x:Key="BorderBrush" Color="#353C46"/>
+  <SolidColorBrush x:Key="TextPrimaryBrush" Color="#F2F4F7"/>
+  <SolidColorBrush x:Key="TextSecondaryBrush" Color="#B5BEC9"/>
+  <SolidColorBrush x:Key="TextMutedBrush" Color="#A4AFBC"/>
+  <SolidColorBrush x:Key="AccentBrush" Color="#8AB4F8"/>
+  <SolidColorBrush x:Key="PrimaryButtonBrush" Color="#A9C7FF"/>
+  <SolidColorBrush x:Key="PrimaryButtonTextBrush" Color="#172235"/>
+  <SolidColorBrush x:Key="PrimaryHoverBrush" Color="#BBD3FF"/>
+  <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#8FB6F5"/>
+  <SolidColorBrush x:Key="HoverBrush" Color="#2D3540"/>
+  <SolidColorBrush x:Key="PressedBrush" Color="#394657"/>
+  <SolidColorBrush x:Key="SelectionBrush" Color="#28384E"/>
+  <SolidColorBrush x:Key="SuccessBrush" Color="#8DCEA8"/>
+  <SolidColorBrush x:Key="WarningBrush" Color="#F0C47A"/>
+  <SolidColorBrush x:Key="ErrorBrush" Color="#F29B9B"/>
+  <SolidColorBrush x:Key="ViewportBrush" Color="#101216"/>
+  <SolidColorBrush x:Key="DisabledBrush" Color="#20242A"/>
+  <SolidColorBrush x:Key="DisabledTextBrush" Color="#77818E"/>
+  <SolidColorBrush x:Key="NeonBrush" Color="#353C46"/>
+  <SolidColorBrush x:Key="AlertBrush" Color="#F29B9B"/>
+</ResourceDictionary>
+

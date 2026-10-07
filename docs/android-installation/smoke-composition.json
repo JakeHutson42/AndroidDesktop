@@ -1,0 +1,24 @@
+{
+  "shellRendered": true,
+  "shellMilliseconds": 513.3065,
+  "packagedViewportLoaded": true,
+  "shellChecks": {
+    "pages": [
+      "Device",
+      "Setup",
+      "Settings"
+    ],
+    "themeSwitchApplied": true,
+    "minimumBoundsRestored": true,
+    "setupCheckComplete": true,
+    "isolatedProfileAdded": true,
+    "profileSwitched": true,
+    "defaultProfileRestored": true,
+    "conflictingProfileCommandsBlocked": true,
+    "backupRequiresGracefulShutdown": true
+  },
+  "browserVersion": "154.0.4258.62",
+  "viewportMode": "composition",
+  "androidConnected": false,
+  "mediaVerified": false
+}

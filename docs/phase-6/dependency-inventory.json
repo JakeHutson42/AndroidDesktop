@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "scope": "Phase 6 device profiles source build",
+  "settingsSchema": 4,
+  "newDependencies": [],
+  "storage": "Existing System.Text.Json settings; isolated AVD directories; per-user FileStream ownership lease",
+  "deviceConcurrency": 1,
+  "maximumProfiles": 32,
+  "newProfileGuestDefaults": { "memoryMiB": 2048, "virtualCores": 2 },
+  "guestSettingsBounds": { "memoryMiB": [512, 8192], "virtualCores": [1, 8] },
+  "legacyResourcePolicy": "Null values preserve AVD configuration",
+  "resourceLimitScope": "Guest settings; no total host memory/CPU/GPU/disk quota",
+  "dependencyBaseline": "../../packaging/runtime-candidate.json and existing locked projects/browser dependencies",
+  "releaseArtifacts": "Historical Phase 3 candidates preserved; no Phase 6 publish/installer produced",
+  "hardwareAcceptance": "unverified"
+}

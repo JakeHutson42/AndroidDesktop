@@ -1,0 +1,17 @@
+{
+  "name": "android-desktop-phase0-viewport",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "packageManager": "pnpm@11.19.0",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.12",
+    "loglevel": "1.9.2",
+    "protobufjs": "7.5.4",
+    "protobufjs-cli": "1.1.3"
+  }
+}

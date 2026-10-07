@@ -1,0 +1,15 @@
+**/bin/
+**/obj/
+.vs/
+*.user
+*.suo
+artifacts/
+TestResults/
+.reference/
+**/node_modules/
+tools/gateway/.venv/
+tools/gateway/**/__pycache__/
+tools/gateway/videobridge_gateway/proto/*_pb2*.py
+phase0.local.json
+android.local.json
+diagnostic-apk/build/

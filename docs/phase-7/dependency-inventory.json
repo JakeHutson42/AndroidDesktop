@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "scope": "Phase 7 same-device backup/restore source build",
+  "newDependencies": [],
+  "settingsSchema": 4,
+  "backupManifestSchema": 1,
+  "restoreJournalSchema": 1,
+  "copyBufferBytes": 65536,
+  "sourceHandleBufferBytes": 4096,
+  "maximumFiles": 4096,
+  "maximumDirectories": 8192,
+  "maximumManifestBytes": 4194304,
+  "stagingReserveBytes": 67108864,
+  "deviceConcurrency": 1,
+  "externalDependencies": "Existing installed official SDK/emulator/system image; not bundled in backups",
+  "compatibility": "Same profile/home/UUID/runtime/configuration; emulator executable and image package metadata hashes",
+  "hardwareConsistency": "unverified",
+  "releaseArtifacts": "Historical Phase 3 candidates preserved; no Phase 7 installer/publish created"
+}

@@ -1,0 +1,451 @@
+<Window x:Class="AndroidDesktop.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="Android Desktop" Width="1440" Height="900" MinWidth="850" MinHeight="600" Background="{DynamicResource BackgroundBrush}" Foreground="{DynamicResource TextPrimaryBrush}" FontFamily="Segoe UI" FontSize="{DynamicResource BodyFontSize}" UseLayoutRounding="True" SnapsToDevicePixels="True" Closing="OnClosing" Deactivated="OnDeactivated" PreviewKeyDown="OnKeyDown" LocationChanged="OnBoundsChanged" SizeChanged="OnBoundsChanged" StateChanged="OnBoundsChanged" Icon="{DynamicResource AndroidAppIcon}">
+  <Grid x:Name="ShellRoot" Background="{DynamicResource BackgroundBrush}">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <TabControl x:Name="ShellNavigation" SelectionChanged="OnPageChanged">
+      <TabItem Header="Device">
+        <Grid x:Name="DeviceWorkspace" Margin="16" DataContext="{Binding Device}">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+          </Grid.RowDefinitions>
+          <WrapPanel x:Name="PanelToggles" Margin="0,0,0,8" Visibility="Collapsed" Grid.Row="1">
+            <Button x:Name="LibraryToggle" Content="APK library" Click="OnLibraryToggle" />
+            <Button x:Name="AutomationToggle" Content="Automation" Click="OnAutomationToggle" />
+          </WrapPanel>
+          <Grid Grid.Row="2" x:Name="WorkspaceColumns">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition x:Name="LibraryColumn" Width="244" />
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition x:Name="AutomationColumn" Width="280" />
+            </Grid.ColumnDefinitions>
+            <Border x:Name="LibraryPanel" Style="{StaticResource Panel}" Margin="0,0,16,0" Padding="12" AllowDrop="True" DragOver="OnApkDragOver" Drop="OnApkDrop">
+              <ScrollViewer x:Name="LibraryScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <Grid MinHeight="{Binding ActualHeight, ElementName=LibraryScroll}">
+                  <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                  </Grid.RowDefinitions>
+                  <StackPanel>
+                    <TextBlock Text="APK library" Style="{StaticResource PanelHeading}" />
+                    <Button Content="＋  Open APK" Style="{StaticResource PrimaryButton}" Command="{Binding OpenApkCommand}" Margin="0,0,0,12" />
+                    <TextBlock Text="Drop a standalone APK to add it" Style="{StaticResource SecondaryText}" Margin="0,0,0,16" />
+                  </StackPanel>
+                  <Grid Grid.Row="1">
+                    <ListBox ItemsSource="{Binding Library}" SelectedItem="{Binding LibrarySelection}" AutomationProperties.Name="APK library" MaxHeight="280" x:Name="ApkLibraryList">
+                      <ListBox.ItemTemplate>
+                        <DataTemplate>
+                          <Grid>
+                            <Grid.ColumnDefinitions>
+                              <ColumnDefinition Width="36" />
+                              <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="{DynamicResource AndroidAppIcon}" Width="24" Height="28" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <StackPanel Grid.Column="1">
+                              <TextBlock Text="{Binding Apk.AppName}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" ToolTip="{Binding Apk.AppName}" />
+                              <TextBlock Text="{Binding Apk.PackageId}" Style="{StaticResource SecondaryText}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding Apk.PackageId}" Margin="0,4,0,0" />
+                            </StackPanel>
+                          </Grid>
+                        </DataTemplate>
+                      </ListBox.ItemTemplate>
+                    </ListBox>
+                    <TextBlock Text="Your imported apps appear here." Margin="8,16">
+                      <TextBlock.Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource SecondaryText}">
+                          <Setter Property="Visibility" Value="Collapsed" />
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding Library.Count}" Value="0">
+                              <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </TextBlock.Style>
+                    </TextBlock>
+                  </Grid>
+                  <ScrollViewer Grid.Row="2" MaxHeight="280" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel>
+                      <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Margin="0,12" />
+                      <TextBlock Text="Selected app" Style="{StaticResource SecondaryText}" />
+                      <TextBlock Text="{Binding SelectedApp}" FontWeight="SemiBold" TextWrapping="Wrap" Margin="0,8" />
+                      <Expander Header="App details">
+                        <TextBlock Text="{Binding SelectedDetails}" Style="{StaticResource SecondaryText}" />
+                      </Expander>
+                      <Button Content="Launch selected app" Style="{StaticResource PrimaryButton}" Command="{Binding LaunchCommand}" Margin="0,8,0,8" />
+                      <WrapPanel>
+                        <Button Content="Launch library app" Command="{Binding LaunchLibraryCommand}" />
+                        <Button Content="Locate APK / update" Command="{Binding LocateLibraryCommand}" />
+                      </WrapPanel>
+                    </StackPanel>
+                  </ScrollViewer>
+                </Grid>
+              </ScrollViewer>
+            </Border>
+            <Grid Grid.Column="1" x:Name="DisplayArea" Margin="0,0,16,0">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+              <StackPanel x:Name="DisplayHeading" Margin="0,0,0,8">
+                <TextBlock Text="{Binding DataContext.ActiveProfileName, RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource PanelHeading}" Margin="0,0,0,8" />
+                <TextBlock Text="{Binding DisplayDetails}" Style="{StaticResource SecondaryText}" Margin="0,0,0,12" x:Name="DisplayDetailsLabel" />
+                <WrapPanel>
+                  <Button Content="Start device" Command="{Binding StartCommand}" Style="{StaticResource ActivePrimaryAction}" />
+                  <Button Style="{StaticResource ActiveAction}" Content="Stop device" Command="{Binding StopCommand}" />
+                  <Button Content="Connect display" Command="{Binding ConnectCommand}">
+                    <Button.Style>
+                      <Style TargetType="Button" BasedOn="{StaticResource ActiveAction}">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding InputReady}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                          </DataTrigger>
+                        </Style.Triggers>
+                      </Style>
+                    </Button.Style>
+                  </Button>
+                  <Button Content="Cancel" Command="{Binding CancelOperationCommand}">
+                    <Button.Style>
+                      <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding Busy}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                          </DataTrigger>
+                        </Style.Triggers>
+                      </Style>
+                    </Button.Style>
+                  </Button>
+                </WrapPanel>
+              </StackPanel>
+              <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="60" />
+                </Grid.ColumnDefinitions>
+                <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Background="{DynamicResource ViewportBrush}" CornerRadius="4">
+                  <Grid>
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="24" IsHitTestVisible="False">
+                      <StackPanel.Style>
+                        <Style xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" TargetType="StackPanel">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding InputReady}" Value="True">
+                              <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </StackPanel.Style>
+                      <TextBlock Text="Android display" Style="{StaticResource PanelHeading}" HorizontalAlignment="Center" />
+                      <TextBlock Text="Start your device to connect the display" Style="{StaticResource SecondaryText}" TextAlignment="Center" />
+                    </StackPanel>
+                    <ContentControl x:Name="ViewportHost" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+                  </Grid>
+                </Border>
+                <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="12,0,0,0">
+                  <StackPanel>
+                    <Button Style="{StaticResource IconButton}" Content="" ToolTip="Back" Command="{Binding DeviceKeyCommand}" CommandParameter="back" />
+                    <Button Style="{StaticResource IconButton}" Content="" ToolTip="Home" Command="{Binding DeviceKeyCommand}" CommandParameter="home" />
+                    <Button Style="{StaticResource IconButton}" Content="" ToolTip="Rotate 90 degrees" Command="{Binding RotateCommand}" />
+                    <Button Style="{StaticResource IconButton}" Content="" ToolTip="Volume up" Command="{Binding DeviceKeyCommand}" CommandParameter="volumeUp" />
+                    <Button Style="{StaticResource IconButton}" Content="" ToolTip="Volume down" Command="{Binding DeviceKeyCommand}" CommandParameter="volumeDown" />
+                    <Button Style="{StaticResource IconButton}" Content="" ToolTip="Mute or unmute audio" Command="{Binding EnableAudioCommand}" />
+                    <Button Style="{StaticResource IconButton}" Content="" ToolTip="Fullscreen (F11); Escape to exit" Click="OnFullscreen" />
+                    <Button Style="{StaticResource IconButton}" Content="" ToolTip="Relaunch selected app" Command="{Binding RelaunchCommand}" />
+                  </StackPanel>
+                </ScrollViewer>
+              </Grid>
+              <Expander x:Name="StatusDetails" Grid.Row="2" Header="Device status" IsExpanded="True" Tag="Inline">
+                <Border Background="{DynamicResource PanelBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="4" Padding="12" Margin="0,8,0,0">
+                  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" Foreground="{DynamicResource TextSecondaryBrush}" AutomationProperties.LiveSetting="Polite" />
+                </Border>
+              </Expander>
+            </Grid>
+            <Border Grid.Column="2" x:Name="AutomationPanel" Style="{StaticResource Panel}" Padding="16">
+              <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <StackPanel>
+                  <TextBlock Text="Automation" Style="{StaticResource PanelHeading}" />
+                  <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Margin="0,0,0,16" />
+                  <TextBlock Text="Record and replay" FontSize="{DynamicResource SectionFontSize}" FontWeight="SemiBold" />
+                  <TextBlock Text="{Binding AutomationStatus}" Style="{StaticResource SecondaryText}" Margin="0,16" AutomationProperties.LiveSetting="Polite" />
+                  <WrapPanel>
+                    <Button Content="Record" Command="{Binding StartRecordingCommand}" />
+                    <Button Style="{StaticResource ActiveAction}" Content="Finish recording" Command="{Binding StopRecordingCommand}" />
+                    <Button Content="Open" Command="{Binding OpenRecordingCommand}" ToolTip="Open a recording" />
+                  </WrapPanel>
+                  <Expander Header="Recording file and recovery">
+                    <StackPanel>
+                      <TextBox Text="{Binding RecordingPath, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" AutomationProperties.Name="Recording path" />
+                      <Button Content="Recover interrupted" Command="{Binding RecoverRecordingCommand}" Margin="0,8,0,0" />
+                    </StackPanel>
+                  </Expander>
+                  <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Margin="0,16" />
+                  <TextBlock Text="Playback" FontSize="{DynamicResource SectionFontSize}" FontWeight="SemiBold" Margin="0,0,0,12" />
+                  <WrapPanel>
+                    <Button Content="Replay" Style="{StaticResource PrimaryButton}" Command="{Binding PlayRecordingCommand}" />
+                    <Button Style="{StaticResource ActiveAction}" Content="Pause" Command="{Binding PausePlaybackCommand}" />
+                    <Button Style="{StaticResource ActiveAction}" Content="Resume" Command="{Binding ResumePlaybackCommand}" />
+                    <Button Style="{StaticResource ActiveAction}" Content="Stop replay" Command="{Binding StopPlaybackCommand}" />
+                  </WrapPanel>
+                  <StackPanel IsEnabled="{Binding AutomationEditingEnabled}">
+                    <TextBlock Text="Loops (1–10000)" Margin="0,12,0,6" />
+                    <TextBox Text="{Binding LoopCount, UpdateSourceTrigger=PropertyChanged}" AutomationProperties.Name="Loop Count" />
+                    <CheckBox IsChecked="{Binding InfiniteLoops}" Margin="0,8">
+                      <TextBlock Text="Loop until stopped" TextWrapping="Wrap" />
+                    </CheckBox>
+                    <TextBlock Text="Delay between loops (ms)" Margin="0,12,0,6" />
+                    <TextBox Text="{Binding LoopDelayMs, UpdateSourceTrigger=PropertyChanged}" AutomationProperties.Name="Loop Delay Ms" />
+                    <Expander Header="Advanced variations">
+                      <StackPanel>
+                        <CheckBox IsChecked="{Binding VariationsEnabled}" Margin="0,12,0,8">
+                          <TextBlock Text="Seeded test variations" TextWrapping="Wrap" />
+                        </CheckBox>
+                        <TextBlock Text="Seed" />
+                        <TextBox Text="{Binding VariationSeed, UpdateSourceTrigger=PropertyChanged}" AutomationProperties.Name="Variation Seed" />
+                        <TextBlock Text="Contact translation bound (0–32 pixels)" />
+                        <TextBox Text="{Binding CoordinatePixels, UpdateSourceTrigger=PropertyChanged}" AutomationProperties.Name="Coordinate Pixels" />
+                        <TextBlock Text="Path displacement bound (0–16 pixels)" />
+                        <TextBox Text="{Binding PathPixels, UpdateSourceTrigger=PropertyChanged}" AutomationProperties.Name="Path Pixels" />
+                        <TextBlock Text="Timing jitter bound (0–100 ms)" />
+                        <TextBox Text="{Binding TimingMs, UpdateSourceTrigger=PropertyChanged}" AutomationProperties.Name="Timing Ms" />
+                      </StackPanel>
+                    </Expander>
+                  </StackPanel>
+                  <Expander Header="Run observations">
+                    <StackPanel>
+                      <TextBlock Text="Pause waits for all input to release. Loops do not reset game state. Variations are reproducible tests; detector outcomes are measured, never assumed." TextWrapping="Wrap" Margin="0,12" />
+                      <TextBlock Text="Detector observation for the last run" />
+                      <TextBox Text="{Binding DetectorResult, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" MaxLength="4096" MinHeight="50" TextWrapping="Wrap" AutomationProperties.Name="Detector Result" />
+                      <Button Content="Save observation" Command="{Binding SaveDetectorResultCommand}" />
+                    </StackPanel>
+                  </Expander>
+                  <Expander Header="Diagnostics">
+                    <Grid Margin="8" Background="{DynamicResource PanelBrush}">
+                      <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                      </Grid.RowDefinitions>
+                      <WrapPanel>
+                        <Button Content="Capture gesture" Command="{Binding CaptureGestureCommand}" />
+                        <Button Content="Replay once" Command="{Binding ReplayGestureCommand}" />
+                        <Button Content="Release input" Command="{Binding ReleaseInputCommand}" />
+                        <Button Content="Force stop" Command="{Binding ForceStopCommand}" />
+                        <Button Content="Export support" Command="{Binding ExportSupportCommand}" />
+                      </WrapPanel>
+                      <TextBox Height="160" Grid.Row="1" Text="{Binding Media, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" FontFamily="Consolas" FontSize="{DynamicResource SmallFontSize}" Margin="0,8,0,8" AutomationProperties.Name="Media" />
+                      <TextBox Height="200" Grid.Row="2" Text="{Binding Log, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" FontSize="{DynamicResource SmallFontSize}" AutomationProperties.Name="Log" />
+                    </Grid>
+                  </Expander>
+                </StackPanel>
+              </ScrollViewer>
+            </Border>
+          </Grid>
+          <Border Grid.Row="0" Background="{DynamicResource PanelBrush}" BorderBrush="{DynamicResource ErrorBrush}" BorderThickness="1" CornerRadius="4" Padding="12" Margin="0,0,0,12">
+            <Border.Style>
+              <Style TargetType="Border">
+                <Setter Property="Visibility" Value="Visible" />
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding OperationError}" Value="">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                  </DataTrigger>
+                </Style.Triggers>
+              </Style>
+            </Border.Style>
+            <ScrollViewer xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" MaxHeight="120" VerticalScrollBarVisibility="Auto">
+              <TextBlock Text="{Binding OperationError}" Foreground="{DynamicResource ErrorBrush}" TextWrapping="Wrap" AutomationProperties.LiveSetting="Assertive" />
+            </ScrollViewer>
+          </Border>
+        </Grid>
+      </TabItem>
+      <TabItem Header="Setup">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+          <StackPanel Margin="20" MaxWidth="880" HorizontalAlignment="Stretch">
+            <TextBlock FontWeight="SemiBold" Text="Prepare Android" FontSize="{DynamicResource PageFontSize}" Foreground="{DynamicResource TextPrimaryBrush}" />
+            <Border Style="{StaticResource Panel}" Margin="0,16,0,16">
+              <StackPanel>
+                <TextBlock Text="One setup. Then just drop an APK and play." Style="{StaticResource PanelHeading}" />
+                <TextBlock Text="We find an existing Android installation or download Android 14 and its emulator for you. Your apps and saved data stay on this PC. First preparation can download several GB and take a while." TextWrapping="Wrap" Margin="0,8,0,12" />
+                <TextBlock Text="{Binding SetupStatus}" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+                <ProgressBar IsIndeterminate="{Binding SetupBusy}" Height="4" Margin="0,12" />
+                <TextBlock Margin="0,6"><Hyperlink NavigateUri="https://developer.android.com/studio/terms" RequestNavigate="OnNavigate">Read the Android SDK license terms</Hyperlink></TextBlock>
+                <CheckBox IsChecked="{Binding AcceptedSdkTerms}" IsEnabled="{Binding CanAcceptSdkTerms}" Margin="0,8"><TextBlock Text="I accept the Android SDK license terms for the components installed on this PC." TextWrapping="Wrap" /></CheckBox>
+                <WrapPanel><Button Content="Prepare Android" Command="{Binding PrepareAndroidCommand}" Style="{StaticResource PrimaryButton}" /><Button Content="Cancel preparation" Command="{Binding CancelSetupCommand}" /></WrapPanel>
+              </StackPanel>
+            </Border>
+            <Expander Header="Advanced · diagnostics, paths, profiles and backups" IsExpanded="False">
+              <StackPanel>
+            <Border Style="{StaticResource Panel}" Margin="0,24,0,0">
+              <Expander Header="Device backups and restoration" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,12">
+                <StackPanel>
+                  <TextBlock Text="Requires a graceful stop in this session. Restore preserves the original device. Backups contain Android accounts/private data; store and share them deliberately." TextWrapping="Wrap" />
+                  <WrapPanel>
+                    <Button Content="Back up active device" Command="{Binding BackupDeviceCommand}" />
+                    <Button Content="Verify backup" Command="{Binding VerifyBackupCommand}" />
+                    <Button Content="Restore backup" Command="{Binding RestoreDeviceCommand}" />
+                    <Button Content="Recover interrupted restore" Command="{Binding RecoverRestoreCommand}" />
+                  </WrapPanel>
+                  <WrapPanel>
+                    <Button Content="Cancel backup" Command="{Binding BackupDeviceCancelCommand}" />
+                    <Button Content="Cancel verification" Command="{Binding VerifyBackupCancelCommand}" />
+                    <Button Content="Cancel staging" Command="{Binding RestoreDeviceCancelCommand}" />
+                  </WrapPanel>
+                  <TextBox Text="{Binding BackupPath, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" AutomationProperties.Name="Backup Path" />
+                  <TextBlock Text="{Binding BackupStatus}" TextWrapping="Wrap" Margin="0,6" />
+                </StackPanel>
+              </Expander>
+            </Border>
+            <Border Background="{DynamicResource PanelBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="16" Margin="0,16" CornerRadius="6">
+              <StackPanel>
+                <TextBlock FontWeight="SemiBold" Text="Device profiles" FontSize="{DynamicResource HeadingFontSize}" Foreground="{DynamicResource TextPrimaryBrush}" />
+                <TextBlock Text="Stop the active device before switching. Each profile keeps its own Android data and APK library." TextWrapping="Wrap" Margin="0,6" />
+                <ComboBox ItemsSource="{Binding Profiles}" SelectedItem="{Binding SelectedProfile}" DisplayMemberPath="Name" IsEnabled="{Binding SetupEditingEnabled}" />
+                <Button Content="Switch to selected profile" Command="{Binding SwitchProfileCommand}" HorizontalAlignment="Left" />
+                <TextBlock Text="New profile name" Margin="0,12,0,6" />
+                <TextBox Text="{Binding NewProfileName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding SetupEditingEnabled}" ToolTip="New profile name (up to 64 characters)" AutomationProperties.Name="New Profile Name" />
+                <Button Content="Add profile" Command="{Binding AddProfileCommand}" HorizontalAlignment="Left" />
+                <TextBlock Text="Adding a profile saves its configuration. Create its Android device below after switching." TextWrapping="Wrap" FontSize="{DynamicResource SmallFontSize}" />
+              </StackPanel>
+            </Border>
+            <TextBlock Text="Detected runtime paths. Change these only when using a custom Android installation." TextWrapping="Wrap" Margin="0,8,0,12" />
+            <TextBlock Text="{Binding SetupStatus}" TextWrapping="Wrap" Margin="0,0,0,8" />
+            <ProgressBar IsIndeterminate="{Binding SetupBusy}" Height="4" Margin="0,0,0,12" />
+            <TextBox Text="{Binding SetupReport, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" MinHeight="110" Margin="0,0,0,16" AutomationProperties.Name="Setup Report" />
+            <Border Style="{StaticResource Panel}" Margin="0,24,0,0">
+              <StackPanel IsEnabled="{Binding SetupEditingEnabled}">
+                <TextBlock Text="Runtime and dependencies" Style="{StaticResource PanelHeading}" />
+                <CheckBox IsChecked="{Binding ShowStandaloneWindow}" Margin="0,4,0,10">
+                  <TextBlock Text="Use Android's own emulator window (embedded display and recording unavailable)" TextWrapping="Wrap" />
+                </CheckBox>
+                <CheckBox IsChecked="{Binding UseControllerDisplay}" Margin="0,4,0,10">
+                  <TextBlock Text="Use embedded controller display (up to 15 fps; optional audio)" TextWrapping="Wrap" />
+                </CheckBox>
+                <TextBlock Text="Guest RAM (512–8192 MiB; blank keeps AVD setting)" />
+                <TextBox Text="{Binding MemoryMb, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" Margin="0,4,0,10" AutomationProperties.Name="Memory Mb" />
+                <TextBlock Text="Virtual CPU cores (1–8; blank keeps AVD setting)" />
+                <TextBox Text="{Binding CpuCores, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" Margin="0,4,0,10" AutomationProperties.Name="Cpu Cores" />
+                <TextBlock Text="Android SDK folder" />
+                <TextBox Text="{Binding SdkRoot, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,10" AutomationProperties.Name="Sdk Root" />
+                <TextBlock Text="Command-line tools folder (contains lib and bin)" />
+                <TextBox Text="{Binding CommandLineToolsRoot, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,10" AutomationProperties.Name="Command Line Tools Root" />
+                <TextBlock Text="Java executable" />
+                <TextBox Text="{Binding JavaExecutable, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,10" AutomationProperties.Name="Java Executable" />
+                <TextBlock Text="Gateway Python executable" />
+                <TextBox Text="{Binding PythonExecutable, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,10" AutomationProperties.Name="Python Executable" />
+                <TextBlock Text="Gateway folder" />
+                <TextBox Text="{Binding GatewayRoot, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,10" AutomationProperties.Name="Gateway Root" />
+                <TextBlock Text="System-image package (initial test selection; compatibility still needs a target APK)" />
+                <TextBox Text="{Binding SystemImage, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,10" AutomationProperties.Name="System Image" />
+              </StackPanel>
+            </Border>
+            <WrapPanel>
+              <Button Content="Save paths" Command="{Binding SaveSetupCommand}" />
+              <Button Content="Check prerequisites" Command="{Binding CheckSetupCommand}" />
+              <Button Content="Create owned device" Command="{Binding CreateDeviceCommand}" />
+              <Button Content="Cancel setup" Command="{Binding CancelSetupCommand}" />
+            </WrapPanel>
+            <TextBlock Text="Missing SDK or image? Install through Google's official tools and read/accept their licenses. No Android Studio project is required." TextWrapping="Wrap" Margin="0,16,0,6" />
+            <TextBlock>
+              <Hyperlink NavigateUri="https://developer.android.com/studio#command-tools" RequestNavigate="OnNavigate">Official Android command-line tools</Hyperlink>
+            </TextBlock>
+            <TextBlock Margin="0,8,0,0">
+              <Hyperlink NavigateUri="https://developer.android.com/tools/sdkmanager" RequestNavigate="OnNavigate">SDK installation and license instructions</Hyperlink>
+            </TextBlock>
+            <TextBlock Margin="0,8,0,0">
+              <Hyperlink NavigateUri="https://developer.microsoft.com/microsoft-edge/webview2/" RequestNavigate="OnNavigate">Microsoft WebView2 Runtime</Hyperlink>
+            </TextBlock>
+            <TextBlock Text="Hardware virtualization must be enabled on this PC. If preparation reports unavailable acceleration, enable Windows Hypervisor Platform and firmware virtualization, restart Windows, and retry." TextWrapping="Wrap" Margin="0,16,0,10" /></StackPanel></Expander>
+          </StackPanel>
+        </ScrollViewer>
+      </TabItem>
+      <TabItem Header="Settings">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+          <StackPanel Margin="24" MaxWidth="880" HorizontalAlignment="Stretch">
+            <TextBlock Text="Settings" FontSize="{DynamicResource PageFontSize}" FontWeight="SemiBold" Margin="0,0,0,24" />
+            <Border Style="{StaticResource Panel}">
+              <StackPanel>
+                <TextBlock Text="Appearance" Style="{StaticResource PanelHeading}" />
+                <TextBlock Text="Color theme" Margin="0,0,0,8" />
+                <ComboBox ItemsSource="{Binding Themes}" SelectedItem="{Binding Theme}" MaxWidth="280" HorizontalAlignment="Left" AutomationProperties.Name="Color theme" />
+                <TextBlock Text="Graphite uses calm surfaces, clear text and a soft blue accent. Alternative palettes keep the same layout and readable neutral surfaces." Style="{StaticResource SecondaryText}" Margin="0,16,0,0" />
+              </StackPanel>
+            </Border>
+            <Border Style="{StaticResource Panel}" Margin="0,24,0,0">
+              <StackPanel>
+                <TextBlock Text="Application data" Style="{StaticResource PanelHeading}" />
+                <TextBlock Text="Window size and position are saved automatically. Android app data stays in the persistent device." Style="{StaticResource SecondaryText}" Margin="0,0,0,12" />
+                <TextBox Text="{Binding DataRoot, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" AutomationProperties.Name="Application data folder" />
+                <TextBlock Text="{Binding PersistenceStatus}" Style="{StaticResource SecondaryText}" Margin="0,12,0,0" />
+              </StackPanel>
+            </Border>
+            <Border Style="{StaticResource Panel}" Margin="0,24,0,0">
+              <StackPanel>
+                <TextBlock Text="Display and controls" Style="{StaticResource PanelHeading}" />
+                <TextBlock Text="Use F11 for fullscreen and Escape to exit. Device controls stay beside the display. On smaller windows, open the APK library or Automation using the panel buttons." Style="{StaticResource SecondaryText}" />
+                <TextBlock Text="Configure the display transport in Setup. Real Android media and hardware results are recorded separately from desktop checks." Style="{StaticResource SecondaryText}" Margin="0,12,0,0" />
+              </StackPanel>
+            </Border>
+          </StackPanel>
+        </ScrollViewer>
+      </TabItem>
+    </TabControl>
+    <Border x:Name="HostHeader" HorizontalAlignment="Right" VerticalAlignment="Top" Padding="8" MinHeight="56" Width="350" Background="{DynamicResource PanelBrush}">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Button Content="{Binding ActiveProfileName}" Click="OnProfileSettings" ToolTip="Manage device profiles in Setup" Margin="0,0,12,0" HorizontalContentAlignment="Left" AutomationProperties.Name="Manage active device profile" />
+        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+          <Ellipse Width="8" Height="8" Margin="0,0,8,0">
+            <Ellipse.Style>
+              <Style TargetType="Ellipse">
+                <Setter Property="Fill" Value="{DynamicResource TextMutedBrush}" />
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding Device.State}" Value="Running">
+                    <Setter Property="Fill" Value="{DynamicResource SuccessBrush}" />
+                  </DataTrigger>
+                  <DataTrigger Binding="{Binding Device.State}" Value="Ready">
+                    <Setter Property="Fill" Value="{DynamicResource SuccessBrush}" />
+                  </DataTrigger>
+                  <DataTrigger Binding="{Binding Device.State}" Value="Faulted">
+                    <Setter Property="Fill" Value="{DynamicResource ErrorBrush}" />
+                  </DataTrigger>
+                </Style.Triggers>
+              </Style>
+            </Ellipse.Style>
+          </Ellipse>
+          <TextBlock Text="{Binding Device.State}" Style="{StaticResource SecondaryText}" />
+        </StackPanel>
+      </Grid>
+    </Border>
+    <Border x:Name="StatusFooter" Grid.Row="1" Background="{DynamicResource PanelBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Padding="16,8" MinHeight="32">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock>
+            <TextBlock.Style>
+              <Style TargetType="TextBlock" BasedOn="{StaticResource SecondaryText}">
+                <Setter Property="Text" Value="Display disconnected" />
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding Device.InputReady}" Value="True">
+                    <Setter Property="Text" Value="Display connected" />
+                    <Setter Property="Foreground" Value="{DynamicResource SuccessBrush}" />
+                  </DataTrigger>
+                </Style.Triggers>
+              </Style>
+            </TextBlock.Style>
+          </TextBlock>
+          <TextBlock Text="{Binding Device.AudioStatus}" Style="{StaticResource SecondaryText}" Margin="24,0,0,0" />
+        </StackPanel>
+        <TextBlock Grid.Column="1" Text="F11  Fullscreen  ·  Esc  Exit" Style="{StaticResource SecondaryText}" />
+      </Grid>
+    </Border>
+  </Grid>
+</Window>
+

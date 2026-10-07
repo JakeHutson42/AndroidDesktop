@@ -1,0 +1,12 @@
+{
+  "install": "passed on existing development Windows PC",
+  "packagedHost": "standard and composition smoke passed",
+  "sameVersionReinstall": "passed",
+  "uninstallProgramFiles": "passed",
+  "existingSettingsObserved": 0,
+  "existingSettingsUnchanged": true,
+  "freshPc": "unverified",
+  "historicalVersionUpgrade": "unverified",
+  "androidDataAndSaves": "unverified",
+  "hardwareMediaAndPerformance": "unverified"
+}

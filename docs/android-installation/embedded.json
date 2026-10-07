@@ -1,0 +1,10 @@
+{
+  "embeddedFramesAndInputReady": true,
+  "media": "{\r\n  \u0022timestampMs\u0022: 8995.5,\r\n  \u0022tracks\u0022: [\r\n    {\r\n      \u0022kind\u0022: \u0022video\u0022,\r\n      \u0022framesDecoded\u0022: 55,\r\n      \u0022framesDropped\u0022: 0,\r\n      \u0022decoderImplementation\u0022: \u0022PNG/canvas controller; no WebRTC audio\u0022,\r\n      \u0022bytesReceived\u0022: 44088185\r\n    }\r\n  ],\r\n  \u0022geometry\u0022: {\r\n    \u0022width\u0022: 1080,\r\n    \u0022height\u0022: 1920,\r\n    \u0022orientation\u0022: 0\r\n  },\r\n  \u0022muted\u0022: false,\r\n  \u0022audioTracks\u0022: [],\r\n  \u0022totalVideoFrames\u0022: 55,\r\n  \u0022droppedVideoFrames\u0022: 45,\r\n  \u0022presentationIntervalMs\u0022: {\r\n    \u0022samples\u0022: 54,\r\n    \u0022p50\u0022: 130.10000000000036,\r\n    \u0022p95\u0022: 230.10000000000036,\r\n    \u0022p99\u0022: 235.10000000000036\r\n  },\r\n  \u0022note\u0022: \u0022Presentation callback intervals are not input latency or Android frame times\u0022\r\n}",
+  "diagnosticPackage": "com.androiddesktop.diagnostic",
+  "gracefulStop": true,
+  "separateEmulatorWindow": false,
+  "newTouchReceived": true,
+  "gamePerformanceVerified": false,
+  "audioVerified": false
+}

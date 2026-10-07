@@ -1,0 +1,10 @@
+[
+  {
+    "artifact": "publish-final.zip",
+    "sha256": "29a9d9071b4f6786acdaab96fc3d65eaea45510c065dc7f136fcb8da991a7d1e"
+  },
+  {
+    "artifact": "AndroidDesktop-0.3.0-win-x64-candidate.exe",
+    "sha256": "44a6ad66627e56822b86a31ac080535dd31e0a44f60565e50135b5b2de3742ee"
+  }
+]

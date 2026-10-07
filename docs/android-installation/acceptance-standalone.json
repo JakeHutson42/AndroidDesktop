@@ -1,0 +1,11 @@
+{
+  "configured": true,
+  "appStartCommand": true,
+  "androidBooted": true,
+  "runtimeIdentity": "{\u0022emulatorVersion\u0022:\u0022Android emulator version 37.2.12.0 (build_id 16428233) (CL:N/A)\\r\\nCopyright (C) 2006-2024 The Android Open Source Project and many others.\\r\\nThis program is a derivative of the QEMU CPU emulator (www.qemu.org).\\r\\n\\r\\n  This software is licensed under the terms of the GNU General Public\\r\\n  License version 2, as published by the Free Software Foundation, and\\r\\n  may be copied, distributed, and modified under those terms.\\r\\n\\r\\n  This program is distributed in the hope that it will be useful,\\r\\n  but WITHOUT ANY WARRANTY; without even the implied warranty of\\r\\n  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\\r\\n  GNU General Public License for more details.\\r\\n\\r\\nINFO         | Android emulator version 37.2.12.0 (build_id 16428233) (CL:N/A)\\r\\nINFO         | Graphics backend: gfxstream\u0022,\u0022avdConfigurationSha256\u0022:\u0022FCA9DDC7506B399D1D6FB2DDE82822CC40B579FAE0F180EDFBAA7CAFD91C7E83\u0022,\u0022guestMemoryMb\u0022:\u00222048\u0022,\u0022guestCpuCores\u0022:\u00222\u0022,\u0022ro.build.version.sdk\u0022:\u002234\u0022,\u0022ro.product.cpu.abilist\u0022:\u0022x86_64,arm64-v8a\u0022,\u0022ro.build.fingerprint\u0022:\u0022google/sdk_gphone64_x86_64/emu64xa:14/UE1A.230829.036.A4/12096271:user/release-keys\u0022}",
+  "appImportCommand": true,
+  "embeddedConnections": 0,
+  "diagnosticInstalledAndLaunched": "com.androiddesktop.diagnostic",
+  "displayMode": "native emulator window; embedded RTC bypassed explicitly",
+  "gracefulStop": true
+}

@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "scope": "Phase 5 APK library source build",
+  "settingsSchema": 3,
+  "storage": "System.Text.Json in existing settings.json; no database or APK copies",
+  "newDependencies": [],
+  "dependencyBaseline": "../../packaging/runtime-candidate.json and existing locked project/browser dependencies",
+  "releaseArtifacts": "Existing 0.3.0 candidates are historical Phase 3 artifacts; no Phase 5 installer produced",
+  "deviceConcurrency": 1,
+  "hardwareAcceptance": "unverified; no APK supplied or Android device run"
+}

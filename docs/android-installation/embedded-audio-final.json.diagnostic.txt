@@ -1,0 +1,4 @@
+--------- beginning of main
+{"run":"0cb4fa05-1d02-4755-80da-a32db58d7605","sequence":14,"kind":"pulse","receivedUptimeMs":37587,"data":{"frameNanos":37565652211,"requestedUptimeMs":37566}}
+{"run":"0cb4fa05-1d02-4755-80da-a32db58d7605","sequence":15,"kind":"pulse","receivedUptimeMs":38573,"data":{"frameNanos":38565652171,"requestedUptimeMs":38567}}
+{"run":"0cb4fa05-1d02-4755-80da-a32db58d7605","sequence":16,"kind":"pulse","receivedUptimeMs":39587,"data":{"frameNanos":39582318797,"requestedUptimeMs":39583}}

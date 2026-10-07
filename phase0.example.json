@@ -1,0 +1,16 @@
+{
+  "sdkRoot": "C:/Users/jakeh/AppData/Local/Android/Sdk",
+  "commandLineToolsRoot": "C:/Users/jakeh/AppData/Local/Android/Sdk/cmdline-tools/latest",
+  "javaExecutable": "C:/Program Files/Android/Android Studio/jbr/bin/java.exe",
+  "pythonExecutable": "C:/path/to/project/tools/gateway/.venv/Scripts/python.exe",
+  "gatewayRoot": "C:/path/to/project/tools/gateway",
+  "avdHome": "%LOCALAPPDATA%/AndroidDesktop/avd",
+  "avdName": "AndroidDesktop_Phase0",
+  "emulatorPort": 5580,
+  "grpcPort": 8554,
+  "gatewayPort": 8087,
+  "evidenceRoot": "%LOCALAPPDATA%/AndroidDesktop/phase0-evidence",
+  "showStandaloneWindow": false,
+  "viewportMode": "standard",
+  "discoveryDirectory": null
+}

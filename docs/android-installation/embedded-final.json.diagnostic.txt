@@ -1,0 +1,6 @@
+--------- beginning of main
+{"run":"cfda199c-89a6-4908-ba6c-b639ff390f99","sequence":5,"kind":"pulse","receivedUptimeMs":29040,"data":{"frameNanos":29028124985,"requestedUptimeMs":29033}}
+{"run":"cfda199c-89a6-4908-ba6c-b639ff390f99","sequence":6,"kind":"touch","receivedUptimeMs":29852,"data":{"actionMasked":0,"actionIndex":0,"eventTimeMs":29635,"downTimeMs":29635,"width":1080,"height":1857,"rotation":0,"pointers":[{"id":0,"x":539.966796875,"y":959.94140625,"pressure":0.5}],"historySize":0,"history":[]}}
+{"run":"cfda199c-89a6-4908-ba6c-b639ff390f99","sequence":7,"kind":"touch","receivedUptimeMs":29852,"data":{"actionMasked":1,"actionIndex":0,"eventTimeMs":29747,"downTimeMs":29635,"width":1080,"height":1857,"rotation":0,"pointers":[{"id":0,"x":539.966796875,"y":959.94140625,"pressure":0.5}],"historySize":0,"history":[]}}
+{"kind":"save","touches":2,"committed":true}
+{"run":"cfda199c-89a6-4908-ba6c-b639ff390f99","sequence":8,"kind":"pulse","receivedUptimeMs":30049,"data":{"frameNanos":30044791611,"requestedUptimeMs":30048}}

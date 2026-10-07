@@ -1,0 +1,5 @@
+--------- beginning of main
+{"run":"3a1228a2-396b-461e-a7ee-37a4db8c78c7","sequence":6,"kind":"touch","receivedUptimeMs":28212,"data":{"actionMasked":0,"actionIndex":0,"eventTimeMs":28200,"downTimeMs":28200,"width":1080,"height":1857,"rotation":0,"pointers":[{"id":0,"x":539.966796875,"y":959.94140625,"pressure":0.5}],"historySize":0,"history":[]}}
+{"kind":"save","touches":1,"committed":true}
+{"run":"3a1228a2-396b-461e-a7ee-37a4db8c78c7","sequence":7,"kind":"touch","receivedUptimeMs":28303,"data":{"actionMasked":1,"actionIndex":0,"eventTimeMs":28302,"downTimeMs":28200,"width":1080,"height":1857,"rotation":0,"pointers":[{"id":0,"x":539.966796875,"y":959.94140625,"pressure":0.5}],"historySize":0,"history":[]}}
+{"run":"3a1228a2-396b-461e-a7ee-37a4db8c78c7","sequence":8,"kind":"pulse","receivedUptimeMs":28900,"data":{"frameNanos":28875568766,"requestedUptimeMs":28885}}
