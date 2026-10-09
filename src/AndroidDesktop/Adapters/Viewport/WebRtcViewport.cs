@@ -3,6 +3,7 @@ using Microsoft.Web.WebView2.Wpf;
 using System.IO;
 using System.Text.Json;
 using System.Windows;
+using AndroidDesktop.Services;
 
 namespace AndroidDesktop.Adapters.Viewport;
 
@@ -13,6 +14,10 @@ public sealed class WebRtcViewport : IDeviceViewport
     private WebView2CompositionControl? _composition;
     private string _mode = "";
     private string _transport = "webrtc";
+    private NativeEmulatorHost? _native;
+    private readonly Func<IReadOnlyList<ActiveDeviceLease.Owner>>? _nativeOwners;
+    private readonly Func<string, Task>? _nativeKey;
+    public NativeEmulatorHost? NativeHost => _native;
     private CoreWebView2? _core;
     private readonly string _assets;
     private readonly string? _userData;
@@ -27,9 +32,10 @@ public sealed class WebRtcViewport : IDeviceViewport
         VerticalContentAlignment = VerticalAlignment.Stretch
     };
     public event Action<string, JsonElement>? Message;
-    public WebRtcViewport(string mode, string? userData = null)
+    public WebRtcViewport(string mode, string? userData = null, Func<IReadOnlyList<ActiveDeviceLease.Owner>>? nativeOwners = null, Func<string, Task>? nativeKey = null)
     {
         _userData = userData;
+        _nativeOwners = nativeOwners; _nativeKey = nativeKey;
         _assets = Path.Combine(AppContext.BaseDirectory, "Assets", "Viewport");
         ConfigureMode(mode);
     }
@@ -44,9 +50,35 @@ public sealed class WebRtcViewport : IDeviceViewport
         if (_composition is not null) _composition.DefaultBackgroundColor = System.Drawing.Color.FromArgb(16, 18, 22);
         _mode = mode;
     }
-    public void ConfigureTransport(string transport) => _transport = transport;
+    public void ConfigureTransport(string transport)
+    {
+        _transport = transport;
+        if (transport == "native") {
+            _native ??= new NativeEmulatorHost();
+            _native.InputFailed -= NativeInputFailed; _native.InputFailed += NativeInputFailed;
+            _native.Status -= NativeStatus; _native.Status += NativeStatus;
+            ((System.Windows.Controls.ContentControl)Control).Content = _native;
+        } else if (_native is not null) {
+            _native.Detach(); _native.Status -= NativeStatus; _native.Dispose(); _native = null;
+            ((System.Windows.Controls.ContentControl)Control).Content = (FrameworkElement?)_standard ?? _composition;
+        }
+    }
+    private void NativeInputFailed(string message) => Message?.Invoke("fault", JsonSerializer.SerializeToElement(message));
+    private void NativeStatus(string message) => Message?.Invoke("status", JsonSerializer.SerializeToElement(message));
+    public async Task PrepareNativeAsync(CancellationToken token) {
+        if (_nativeOwners is null || _native is null) throw new InvalidOperationException("Native viewport ownership is unavailable.");
+        await _native.AttachAsync(_nativeOwners, token);
+    }
     public async Task ConnectAsync(int port, string token, CancellationToken cancellationToken)
     {
+        if (_transport == "native") {
+            if (_nativeOwners is null || _native is null) throw new InvalidOperationException("Native viewport ownership is unavailable.");
+            if (!_native.Attached) await PrepareNativeAsync(cancellationToken);
+            await _native.ConnectInputAsync(port, token, cancellationToken);
+            _native.Present();
+            Message?.Invoke("inputReady", JsonSerializer.SerializeToElement(true));
+            return;
+        }
         _allowedPort = port;
         await InitializeAsync(cancellationToken);
         _connected = new(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -121,6 +153,12 @@ public sealed class WebRtcViewport : IDeviceViewport
     }
     public void Send(string kind, object? data = null)
     {
+        if (_transport == "native") {
+            if (kind == "cancel") _native?.ReleaseInput();
+            if (kind == "deviceKey" && data is string key) _ = SendNativeKeyAsync(key);
+            if (kind == "rotation" && data is int degrees) _native?.SetRotation(degrees);
+            return;
+        }
         if (_core is null || _processFailed) return;
         // Only a closed message vocabulary is accepted by the packaged page.
         try { _core.PostWebMessageAsJson(kind == "rotation" ? JsonSerializer.Serialize(new { kind, degrees = data }) : JsonSerializer.Serialize(new { kind, data })); }
@@ -131,6 +169,7 @@ public sealed class WebRtcViewport : IDeviceViewport
     }
     public async Task DisconnectAsync()
     {
+        if (_transport == "native") { if (_native is not null) await _native.DisconnectInputAsync(); _native?.Detach(); Message?.Invoke("inputReady", JsonSerializer.SerializeToElement(false)); return; }
         Send("disconnect");
         var environment = _core?.Environment;
         var exited = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -173,5 +212,10 @@ public sealed class WebRtcViewport : IDeviceViewport
         await Task.Delay(100);
         await _core.CallDevToolsProtocolMethodAsync("Input.dispatchMouseEvent", JsonSerializer.Serialize(new { type = "mouseReleased", x, y, button = "left", clickCount = 1 }));
     }
-    public async ValueTask DisposeAsync() => await DisconnectAsync();
+    private async Task SendNativeKeyAsync(string key)
+    {
+        try { if (_nativeKey is not null) await _nativeKey(key); }
+        catch (Exception error) { Message?.Invoke("status", JsonSerializer.SerializeToElement(error.Message)); }
+    }
+    public async ValueTask DisposeAsync() { await DisconnectAsync(); _native?.Dispose(); _native = null; }
 }

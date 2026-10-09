@@ -16,19 +16,29 @@ public partial class App : Application
   _instance = new Mutex(true, "Local\\AndroidDesktop-" + key, out var first);
   if (!first) { _instance.Dispose(); _instance = null; MessageBox.Show("Android Desktop is already open. Use that window to switch profiles; only one device may be active.", "Android Desktop"); Shutdown(); return; }
   var startup = System.Diagnostics.Stopwatch.StartNew();
-  PrototypeOptions? imported = null; string? warning = null;
+  PrototypeOptions? imported = null; DesktopSettings? seed = null; string? warning = null;
   var smoke = e.Args.Length >= 2 && e.Args[0] == "--smoke-test";
   var embeddedTest = e.Args.Length >= 3 && e.Args[0] == "--embedded-test";
+  var renderTest = e.Args.Length >= 4 && e.Args[0] == "--render-test";
+  var nativeDisplay = e.Args.Contains("--native-display");
   var startDevice = e.Args.Contains("--start-device");
-  var config = smoke || embeddedTest || startDevice ? null : e.Args.FirstOrDefault();
+  var config = smoke || embeddedTest || startDevice || renderTest || nativeDisplay ? null : e.Args.FirstOrDefault();
   if (config is not null) try { imported = await PrototypeOptions.LoadAsync(config); } catch (Exception error) { warning = "Configuration import failed: " + error.Message; }
   var options = new DesktopSettings().Runtime;
+  if (renderTest || nativeDisplay) {
+   var saved = await new SettingsStore(SettingsStore.DataRoot).LoadAsync();
+   seed = saved;
+   var mode = renderTest ? e.Args[1] : "native";
+   if (mode is not ("native" or "controller" or "standalone")) throw new InvalidDataException("Render test mode must be native, controller or standalone.");
+   imported = saved.Runtime with { DisplayTransport = mode == "native" ? "native" : "controller", ShowStandaloneWindow = mode == "standalone", ViewportMode = "standard" };
+  }
   if (smoke && e.Args.Contains("--composition")) options = options with { ViewportMode = "composition" };
   var tools = new AndroidToolService(); var evidence = new EvidenceService();
   var session = new EmulatorSessionService(options, tools, evidence);
-  var viewport = new WebRtcViewport(options.ViewportMode, smoke ? Path.GetFullPath(e.Args[1]) + ".webview" : null);
-  var viewModel = new PrototypeViewModel(session, viewport, evidence);
-  var desktop = new DesktopViewModel(viewModel, new SettingsStore(SettingsStore.DataRoot), new SetupService(tools, new DeviceStorageService()), session, persistent: !smoke);
+  session.TestGrpcShutdown = renderTest && e.Args.Contains("--grpc-shutdown");
+  var viewport = new WebRtcViewport(options.ViewportMode, smoke ? Path.GetFullPath(e.Args[1]) + ".webview" : null, session.NativeWindowOwners, session.NativeDeviceKeyAsync);
+  var viewModel = new PrototypeViewModel(session, viewport, evidence) { PersistStartupTimings = !smoke && !renderTest && !nativeDisplay };
+  var desktop = new DesktopViewModel(viewModel, new SettingsStore(SettingsStore.DataRoot), new SetupService(tools, new DeviceStorageService()), session, persistent: !smoke && !renderTest && !nativeDisplay);
   desktop.RuntimeConfigured += configured => { viewport.ConfigureMode(configured.ViewportMode); viewport.ConfigureTransport(configured.DisplayTransport); };
   viewModel.CommitSelection = desktop.CommitSelectionAsync;
   if (smoke) viewModel.Busy = false;
@@ -55,8 +65,12 @@ public partial class App : Application
   };
   window.Show(); if (warning is not null) viewModel.AddMessage(warning);
   if (!smoke) try {
-   await desktop.InitializeAsync(imported);
-   if (embeddedTest) {
+   await desktop.InitializeAsync(imported, seed);
+   if (renderTest) {
+    await RenderBenchmark.RunAsync(e.Args[1], Path.GetFullPath(e.Args[2]), int.Parse(e.Args[3]), window, desktop, viewport, session, tools, e.Args.Length >= 5 && e.Args[4] != "-" ? e.Args[4] : null, e.Args.Length >= 6 ? e.Args[5] : "home");
+    window.Close();
+   }
+   else if (embeddedTest) {
     object report;
     try {
      if (session.Options.ShowStandaloneWindow || session.Options.DisplayTransport != "controller") throw new InvalidOperationException("Configure embedded controller mode before this explicit real-device test.");

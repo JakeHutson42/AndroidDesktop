@@ -1,7 +1,7 @@
 param(
     [Parameter(Mandatory=$true)][string]$SdkRoot,
     [Parameter(Mandatory=$true)][string]$JavaHome,
-    [string]$BuildToolsVersion = '34.0.0',
+    [string]$BuildToolsVersion = '36.0.0',
     [int]$ApiLevel = 34
 )
 $ErrorActionPreference = 'Stop'
@@ -18,10 +18,11 @@ foreach ($taskFile in @($taskJar, (Join-Path $taskTools 'aapt2.exe'), (Join-Path
 }
 New-Item -ItemType Directory -Path $taskBuild,(Join-Path $taskBuild 'classes'),(Join-Path $taskBuild 'dex') -Force | Out-Null
 $taskSources = @(Get-ChildItem (Join-Path $taskRoot 'diagnostic-apk/src') -Recurse -Filter '*.java' | ForEach-Object FullName)
-Invoke-Checked (Join-Path $JavaHome 'bin/javac.exe') (@('-encoding','UTF-8','-source','8','-target','8','-classpath',$taskJar,'-d',(Join-Path $taskBuild 'classes')) + $taskSources)
+Invoke-Checked (Join-Path $JavaHome 'bin/javac.exe') (@('-encoding','UTF-8','--release','8','-classpath',$taskJar,'-d',(Join-Path $taskBuild 'classes')) + $taskSources)
 Invoke-Checked (Join-Path $JavaHome 'bin/jar.exe') @('cf',(Join-Path $taskBuild 'classes.jar'),'-C',(Join-Path $taskBuild 'classes'),'.')
 Invoke-Checked (Join-Path $JavaHome 'bin/java.exe') @('-cp',(Join-Path $taskTools 'lib/d8.jar'),'com.android.tools.r8.D8','--min-api','26','--lib',$taskJar,'--output',(Join-Path $taskBuild 'dex'),(Join-Path $taskBuild 'classes.jar'))
 Invoke-Checked (Join-Path $taskTools 'aapt2.exe') @('link','-o',(Join-Path $taskBuild 'unsigned.apk'),'--manifest',(Join-Path $taskRoot 'diagnostic-apk/AndroidManifest.xml'),'-I',$taskJar)
+Add-Type -AssemblyName System.IO.Compression
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 $taskZip = [IO.Compression.ZipFile]::Open((Join-Path $taskBuild 'unsigned.apk'),[IO.Compression.ZipArchiveMode]::Update)
 try { [IO.Compression.ZipFileExtensions]::CreateEntryFromFile($taskZip,(Join-Path $taskBuild 'dex/classes.dex'),'classes.dex') | Out-Null } finally { $taskZip.Dispose() }

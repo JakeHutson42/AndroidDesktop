@@ -1,0 +1,15 @@
+{
+  "source": "20261008-223636-0a4502a5",
+  "windowStartUtc": "2026-10-08T22:37:19.446555Z",
+  "windowEndUtc": "2026-10-08T22:37:39.4540786Z",
+  "seconds": 20.0,
+  "receivedDecodedFps": 7.85,
+  "receivedMiBPerSecond": 12.239812088012695,
+  "callbackIntervalMs": {
+    "samples": 276,
+    "p50": 130,
+    "p95": 145,
+    "p99": 150.20000000000073
+  },
+  "limitation": "Final 20 seconds of controller media evidence. Callback intervals are cumulative, not verified presentation or input latency."
+}

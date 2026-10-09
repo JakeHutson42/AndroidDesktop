@@ -36,7 +36,10 @@ public partial class DesktopViewModel : ObservableObject
     [ObservableProperty] private int? memoryMb;
     [ObservableProperty] private int? cpuCores;
     [ObservableProperty] private bool showStandaloneWindow;
+    partial void OnShowStandaloneWindowChanged(bool value) { if (value) UseNativeDisplay = false; }
     [ObservableProperty] private bool useControllerDisplay;
+    [ObservableProperty] private bool useNativeDisplay;
+    partial void OnUseNativeDisplayChanged(bool value) { if (value) { ShowStandaloneWindow = false; UseControllerDisplay = true; } }
     [ObservableProperty] private string backupPath = "";
     [ObservableProperty] private string backupStatus = "Gracefully stop the active device before backup or restore. Backups can contain Android accounts and private data.";
     public System.Collections.ObjectModel.ObservableCollection<DeviceProfile> Profiles { get; } = [];
@@ -85,9 +88,10 @@ public partial class DesktopViewModel : ObservableObject
         _saveTimer.Tick += async (_, _) => { _saveTimer.Stop(); await SaveAsync(); };
         device.PropertyChanged += (_, e) => { if (e.PropertyName is nameof(Device.Busy) or nameof(Device.State) or nameof(Device.RecordingActive) or nameof(Device.PlaybackActive)) NotifySetupCommands(); };
     }
-    public async Task InitializeAsync(PrototypeOptions? imported = null)
+    public async Task InitializeAsync(PrototypeOptions? imported = null, DesktopSettings? seed = null)
     {
-        if (_persistent) _settings = await _store.LoadAsync();
+        if (seed is not null) _settings = seed;
+        else if (_persistent) _settings = await _store.LoadAsync();
         _settings = DeviceProfiles.Normalize(_settings);
         // Older defaults used the experimental RTC service, which current emulator
         // token scopes reject. Normal startup uses the authenticated controller API.
@@ -121,13 +125,14 @@ public partial class DesktopViewModel : ObservableObject
         PythonExecutable = options.PythonExecutable; GatewayRoot = options.GatewayRoot;
         MemoryMb = options.MemoryMb; CpuCores = options.CpuCores; ShowStandaloneWindow = options.ShowStandaloneWindow;
         UseControllerDisplay = options.DisplayTransport == "controller";
+        UseNativeDisplay = options.DisplayTransport == "native";
     }
     private PrototypeOptions ReadOptions() => _settings.Runtime with
     {
         SdkRoot = Environment.ExpandEnvironmentVariables(SdkRoot.Trim()), CommandLineToolsRoot = Environment.ExpandEnvironmentVariables(CommandLineToolsRoot.Trim()),
         JavaExecutable = Environment.ExpandEnvironmentVariables(JavaExecutable.Trim()), PythonExecutable = Environment.ExpandEnvironmentVariables(PythonExecutable.Trim()),
         GatewayRoot = Environment.ExpandEnvironmentVariables(GatewayRoot.Trim()), MemoryMb = MemoryMb, CpuCores = CpuCores,
-        ShowStandaloneWindow = ShowStandaloneWindow, DisplayTransport = UseControllerDisplay ? "controller" : "webrtc"
+        ShowStandaloneWindow = UseNativeDisplay ? false : ShowStandaloneWindow, DisplayTransport = UseNativeDisplay ? "native" : UseControllerDisplay ? "controller" : "webrtc"
     };
     partial void OnThemeChanged(string value)
     {

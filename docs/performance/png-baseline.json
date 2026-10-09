@@ -1,0 +1,100 @@
+{
+  "scenario": "Tap Titans 2 8.3.0 import and first-run screen; historical mixed workload",
+  "source": "20261007-231532-1e6c3e91",
+  "seconds": 59.0,
+  "transport": "controller",
+  "geometry": {
+    "width": 1080,
+    "height": 1920,
+    "orientation": 0
+  },
+  "receivedDecodedFramesPerSecond": 9.37,
+  "receivedMiBPerSecond": 9.64,
+  "presentationIntervalMs": {
+    "samples": 555,
+    "p50": 120.20000000000073,
+    "p95": 145,
+    "p99": 150.09999999999945
+  },
+  "processes": [
+    {
+      "process": "qemu-system-x86_64-headless",
+      "meanCpuPercentOfMachine": 24.67,
+      "peakCpuPercentOfMachine": 48.6,
+      "peakWorkingSetMiB": 4140.9
+    },
+    {
+      "process": "python",
+      "meanCpuPercentOfMachine": 1.51,
+      "peakCpuPercentOfMachine": 2.16,
+      "peakWorkingSetMiB": 63.5
+    },
+    {
+      "process": "msedgewebview2",
+      "meanCpuPercentOfMachine": 1.37,
+      "peakCpuPercentOfMachine": 3.5,
+      "peakWorkingSetMiB": 530.4
+    },
+    {
+      "process": "AndroidDesktop",
+      "meanCpuPercentOfMachine": 0.62,
+      "peakCpuPercentOfMachine": 6.05,
+      "peakWorkingSetMiB": 223.6
+    },
+    {
+      "process": "netsimd",
+      "meanCpuPercentOfMachine": 0.58,
+      "peakCpuPercentOfMachine": 4.03,
+      "peakWorkingSetMiB": 31.2
+    },
+    {
+      "process": "adb",
+      "meanCpuPercentOfMachine": 0.01,
+      "peakCpuPercentOfMachine": 0.48,
+      "peakWorkingSetMiB": 12.2
+    },
+    {
+      "process": "cncmd",
+      "meanCpuPercentOfMachine": 0.0,
+      "peakCpuPercentOfMachine": 0.0,
+      "peakWorkingSetMiB": 8.5
+    },
+    {
+      "process": "conhost",
+      "meanCpuPercentOfMachine": 0.0,
+      "peakCpuPercentOfMachine": 0.0,
+      "peakWorkingSetMiB": 22.6
+    },
+    {
+      "process": "crashpad_handler",
+      "meanCpuPercentOfMachine": 0.0,
+      "peakCpuPercentOfMachine": 0.0,
+      "peakWorkingSetMiB": 8.0
+    },
+    {
+      "process": "emulator",
+      "meanCpuPercentOfMachine": 0.0,
+      "peakCpuPercentOfMachine": 0.0,
+      "peakWorkingSetMiB": 11.8
+    },
+    {
+      "process": "java",
+      "meanCpuPercentOfMachine": 0.0,
+      "peakCpuPercentOfMachine": 0.0,
+      "peakWorkingSetMiB": 97.8
+    },
+    {
+      "process": "RadeonSoftware",
+      "meanCpuPercentOfMachine": 0.0,
+      "peakCpuPercentOfMachine": 0.0,
+      "peakWorkingSetMiB": 21.7
+    }
+  ],
+  "limitations": [
+    "Historic evidence, not a controlled benchmark.",
+    "Frame delivery is not verified presentation or input latency.",
+    "Working sets include shared pages and are not unique physical RAM.",
+    "GPU backend and GPU engine use require separate verification.",
+    "CPU values are normalized to total machine capacity by the evidence sampler."
+  ]
+}

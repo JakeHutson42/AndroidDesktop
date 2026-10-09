@@ -97,7 +97,7 @@ For installer and self-contained builds, see the [build guide](docs/phase-3/BUIL
 Verified locally:
 
 - Clean Debug and Release builds.
-- **128 .NET tests** and **30 viewport tests** passing.
+- **133 .NET tests** and **30 viewport tests** passing.
 - Real Android boot, authenticated controller connection and visible viewport output.
 - Tap Titans 2 **8.3.0** installed with its x86-64 split and launched to its first-run screen.
 
@@ -107,7 +107,7 @@ Still being tested:
 - Saved-progress retention, backups and replay on real games.
 - Fresh-PC installation and a complete first-time download run.
 
-The current embedded display is limited to **15 fps**. Audio is optional and starts off. AAB, APKS, XAPK and separate OBB files aren’t supported. This is an active development project, not a finished release.
+The default controller display is limited to **15 fps**. An opt-in [native viewport prototype](docs/performance/PHASE_2.md) bypasses that pipeline; its remaining DPI, input and gameplay acceptance checks are documented there. Audio is optional and starts off. AAB, APKS, XAPK and separate OBB files aren’t supported. This is an active development project, not a finished release.
 
 ## Project notes
 

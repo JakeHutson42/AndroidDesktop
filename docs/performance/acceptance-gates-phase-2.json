@@ -1,0 +1,11 @@
+{
+  "nativeHost": "Opt-in feasibility prototype; controller remains default",
+  "nativeKeyboard": "FAIL: Windows submitted navigation press/release; Android diagnostic records release only with temporary hardware keyboard/D-pad enabled",
+  "configurationRestored": true,
+  "compositionExtendedPreview": "FAIL: two attempts exited with native access violation 0xC0000005; hiding viewport during capture did not resolve it",
+  "compositionNavigation": "PASS: no-preview navigation/layout smoke",
+  "tabHoverFlicker": "Not conclusively reproduced or declared fixed",
+  "nativePresentedFps": "Not measured",
+  "mixedMonitorDpi": "Not measured; native host validated at 96 DPI",
+  "promotionToDefault": "Not accepted: keyboard correctness and performance versus standalone remain open"
+}

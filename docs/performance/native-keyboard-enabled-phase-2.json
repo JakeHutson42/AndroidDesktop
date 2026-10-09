@@ -1,0 +1,412 @@
+{
+  "mode": "native",
+  "workload": "Android Home after 15-second settling period; no game workload",
+  "requestedSampleSeconds": 10,
+  "ready": true,
+  "error": null,
+  "graphics": "GLES: Google (NVIDIA Corporation), Android Emulator OpenGL ES Translator (NVIDIA GeForce RTX 5080/PCIe/SSE2), OpenGL ES 3.1 (4.5.0 NVIDIA 616.92)\r",
+  "rendererLog": "INFO         | Graphics backend: gfxstream\r\nINFO         | emuglConfig_get_vulkan_hardware_gpu_support_info: Found physical GPU 'NVIDIA GeForce RTX 5080', type: VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU, apiVersion: 1.4.351, driverVersion: 616.92\r\nINFO         | emuglConfig_get_vulkan_hardware_gpu_support_info: Found physical GPU 'AMD Radeon(TM) Graphics', type: VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU, apiVersion: 1.4.315, driverVersion: 2.0.353\r\nINFO         | Selecting Vulkan device: NVIDIA GeForce RTX 5080, Version: 1.4.351\r\nWHPX on Windows 10.0.26200 detected.\r",
+  "samples": [
+    {
+      "seconds": 0.014499,
+      "processes": []
+    },
+    {
+      "seconds": 1.0486571,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 29244,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 13.015625
+        },
+        {
+          "name": "conhost",
+          "id": 24436,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.51171875
+        },
+        {
+          "name": "qemu-system-x86_64",
+          "id": 30536,
+          "cpuPercentOfMachine": 13.055280352768477,
+          "workingSetMiB": 3491.32421875
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 10236,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.93359375
+        },
+        {
+          "name": "netsimd",
+          "id": 15804,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 28.2265625
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 27732,
+          "cpuPercentOfMachine": 0.28295333379692406,
+          "workingSetMiB": 174.421875
+        }
+      ]
+    },
+    {
+      "seconds": 2.0769376,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 29244,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 13.015625
+        },
+        {
+          "name": "conhost",
+          "id": 24436,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.51171875
+        },
+        {
+          "name": "qemu-system-x86_64",
+          "id": 30536,
+          "cpuPercentOfMachine": 13.491108023622692,
+          "workingSetMiB": 3512.296875
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 10236,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.93359375
+        },
+        {
+          "name": "netsimd",
+          "id": 15804,
+          "cpuPercentOfMachine": 0.284943238212766,
+          "workingSetMiB": 28.35546875
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 27732,
+          "cpuPercentOfMachine": 0.28492497601706696,
+          "workingSetMiB": 175.01953125
+        }
+      ]
+    },
+    {
+      "seconds": 3.0990398,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 29244,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 13.015625
+        },
+        {
+          "name": "conhost",
+          "id": 24436,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.51171875
+        },
+        {
+          "name": "qemu-system-x86_64",
+          "id": 30536,
+          "cpuPercentOfMachine": 13.46876431471734,
+          "workingSetMiB": 3531.65625
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 10236,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.93359375
+        },
+        {
+          "name": "netsimd",
+          "id": 15804,
+          "cpuPercentOfMachine": 0.09553866417026531,
+          "workingSetMiB": 29.140625
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 27732,
+          "cpuPercentOfMachine": 0.19108605855683983,
+          "workingSetMiB": 175.22265625
+        }
+      ]
+    },
+    {
+      "seconds": 4.1279161,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 29244,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 13.015625
+        },
+        {
+          "name": "conhost",
+          "id": 24436,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.51171875
+        },
+        {
+          "name": "qemu-system-x86_64",
+          "id": 30536,
+          "cpuPercentOfMachine": 13.291935652910086,
+          "workingSetMiB": 3572.140625
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 10236,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.93359375
+        },
+        {
+          "name": "netsimd",
+          "id": 15804,
+          "cpuPercentOfMachine": 0.18986314300115245,
+          "workingSetMiB": 29.140625
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 27732,
+          "cpuPercentOfMachine": 0.18982706723802287,
+          "workingSetMiB": 175.43359375
+        }
+      ]
+    },
+    {
+      "seconds": 5.152815,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 29244,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 13.015625
+        },
+        {
+          "name": "conhost",
+          "id": 24436,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.51171875
+        },
+        {
+          "name": "qemu-system-x86_64",
+          "id": 30536,
+          "cpuPercentOfMachine": 2.4763636952366723,
+          "workingSetMiB": 3572.15234375
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 10236,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.93359375
+        },
+        {
+          "name": "netsimd",
+          "id": 15804,
+          "cpuPercentOfMachine": 0.19055889405252338,
+          "workingSetMiB": 29.140625
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 27732,
+          "cpuPercentOfMachine": 0.19058857166276666,
+          "workingSetMiB": 175.71875
+        }
+      ]
+    },
+    {
+      "seconds": 6.1829192,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 29244,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 13.015625
+        },
+        {
+          "name": "conhost",
+          "id": 24436,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.51171875
+        },
+        {
+          "name": "qemu-system-x86_64",
+          "id": 30536,
+          "cpuPercentOfMachine": 4.739591523347485,
+          "workingSetMiB": 3572.15234375
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 10236,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.93359375
+        },
+        {
+          "name": "netsimd",
+          "id": 15804,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 29.140625
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 27732,
+          "cpuPercentOfMachine": 0.1896152997424096,
+          "workingSetMiB": 175.90625
+        }
+      ]
+    },
+    {
+      "seconds": 7.2157203,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 29244,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 13.015625
+        },
+        {
+          "name": "conhost",
+          "id": 24436,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.51171875
+        },
+        {
+          "name": "qemu-system-x86_64",
+          "id": 30536,
+          "cpuPercentOfMachine": 2.080049628320092,
+          "workingSetMiB": 3572.15625
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 10236,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.93359375
+        },
+        {
+          "name": "netsimd",
+          "id": 15804,
+          "cpuPercentOfMachine": 0.0945391248822088,
+          "workingSetMiB": 29.140625
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 27732,
+          "cpuPercentOfMachine": 0.1890733260361315,
+          "workingSetMiB": 176.90625
+        }
+      ]
+    },
+    {
+      "seconds": 8.2412248,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 29244,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 13.015625
+        },
+        {
+          "name": "conhost",
+          "id": 24436,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.51171875
+        },
+        {
+          "name": "qemu-system-x86_64",
+          "id": 30536,
+          "cpuPercentOfMachine": 2.0953995838923505,
+          "workingSetMiB": 3570.109375
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 10236,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.93359375
+        },
+        {
+          "name": "netsimd",
+          "id": 15804,
+          "cpuPercentOfMachine": 0.19047571214632592,
+          "workingSetMiB": 29.140625
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 27732,
+          "cpuPercentOfMachine": 0.19046566313061625,
+          "workingSetMiB": 177.09765625
+        }
+      ]
+    },
+    {
+      "seconds": 9.2692549,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 29244,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 13.015625
+        },
+        {
+          "name": "conhost",
+          "id": 24436,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.51171875
+        },
+        {
+          "name": "qemu-system-x86_64",
+          "id": 30536,
+          "cpuPercentOfMachine": 4.559276725094143,
+          "workingSetMiB": 3570.109375
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 10236,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.93359375
+        },
+        {
+          "name": "netsimd",
+          "id": 15804,
+          "cpuPercentOfMachine": 0.09498284387959612,
+          "workingSetMiB": 29.140625
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 27732,
+          "cpuPercentOfMachine": 0.28497389292612546,
+          "workingSetMiB": 177.3046875
+        }
+      ]
+    }
+  ],
+  "dispatcherDelayMs": [
+    0.9827,
+    0.0561,
+    0.0619,
+    0.0597,
+    0.0482,
+    0.0699,
+    0.0975,
+    0.0597,
+    0.0521,
+    0.0651
+  ],
+  "retainedDuringResizeAndNavigation": true,
+  "nativeDetached": true,
+  "nativeDpi": 96,
+  "nativeFocus": true,
+  "nativeInputTestRan": true,
+  "nativeTouch": true,
+  "nativeKey": false,
+  "nativeKeyboardSubmitted": true,
+  "inputEvidence": "{\"run\":\"2e6dfaa7-e04f-4132-99cc-fadef92337b5\",\"sequence\":5,\"kind\":\"touch\",\"receivedUptimeMs\":49513,\"data\":{\"actionMasked\":0,\"actionIndex\":0,\"eventTimeMs\":49509,\"downTimeMs\":49509,\"width\":1080,\"height\":1857,\"rotation\":0,\"pointers\":[{\"id\":0,\"x\":537.95703125,\"y\":959.94140625,\"pressure\":1}],\"historySize\":0,\"history\":[]}}\r\n{\"run\":\"2e6dfaa7-e04f-4132-99cc-fadef92337b5\",\"sequence\":6,\"kind\":\"touch\",\"receivedUptimeMs\":49604,\"data\":{\"actionMasked\":1,\"actionIndex\":0,\"eventTimeMs\":49601,\"downTimeMs\":49509,\"width\":1080,\"height\":1857,\"rotation\":0,\"pointers\":[{\"id\":0,\"x\":537.95703125,\"y\":959.94140625,\"pressure\":1}],\"historySize\":0,\"history\":[]}}\r\n{\"run\":\"2e6dfaa7-e04f-4132-99cc-fadef92337b5\",\"sequence\":7,\"kind\":\"key\",\"receivedUptimeMs\":49693,\"data\":{\"action\":1,\"keyCode\":20,\"repeatCount\":0,\"eventTimeMs\":49692,\"downTimeMs\":49604}}\r",
+  "preservedPackage": "    versionName=8.3.0\r\n    lastUpdateTime=2026-10-08 00:16:16\r\n      firstInstallTime=2026-10-08 00:16:16\r",
+  "resizeCount": 24,
+  "gracefulStop": true,
+  "ownedProcessHandlesAfterStop": false,
+  "limitations": "No presented frame-rate, physical mixed-monitor DPI, hardware input or game performance claim. Diagnostic pointer uses scoped window messages; the generated navigation key requires this app's foreground window and owned Qt focus. Dispatcher delay is not input-to-visible latency.",
+  "temporaryHardwareConfiguration": "hw.keyboard=yes, hw.dPad=yes, hw.keyboard.lid=no",
+  "originalConfigurationRestored": true
+}

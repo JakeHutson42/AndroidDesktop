@@ -89,6 +89,7 @@ public sealed class OwnedProcess : IDisposable
     private readonly Task _stdout, _stderr;
     private readonly Queue<string> _tail = new();
     private readonly object _gate = new();
+    private readonly CancellationTokenSource _drainStop = new();
     public OwnedProcess(ProcessStartInfo startInfo)
     {
         Process = new Process { StartInfo = startInfo };
@@ -100,21 +101,46 @@ public sealed class OwnedProcess : IDisposable
     {
         var buffer = new char[2048];
         int length;
-        while ((length = await reader.ReadAsync(buffer).ConfigureAwait(false)) > 0)
-        {
-            lock (_gate) { _tail.Enqueue(new string(buffer, 0, length)); while (_tail.Count > 32) _tail.Dequeue(); }
-        }
+        try {
+            while ((length = await reader.ReadAsync(buffer.AsMemory(), _drainStop.Token).ConfigureAwait(false)) > 0)
+                lock (_gate) { _tail.Enqueue(new string(buffer, 0, length)); while (_tail.Count > 32) _tail.Dequeue(); }
+        } catch (Exception error) when (_drainStop.IsCancellationRequested && error is OperationCanceledException or ObjectDisposedException or IOException) { }
     }
     public string Tail { get { lock (_gate) return string.Concat(_tail); } }
+    public double ExitWaitSeconds { get; private set; }
+    public double OutputDrainSeconds { get; private set; }
+    public bool OutputPipeHeldAfterExit { get; private set; }
+    public async Task WaitForProcessExitAsync(CancellationToken token)
+    {
+        var timer = Stopwatch.StartNew(); await Process.WaitForExitAsync(token);
+        ExitWaitSeconds = timer.Elapsed.TotalSeconds;
+    }
+    /// <summary>Call only after the root and all captured device descendants exit.</summary>
+    public async Task CompleteOutputAsync(CancellationToken token)
+    {
+        var timer = Stopwatch.StartNew(); var output = Task.WhenAll(_stdout, _stderr);
+        try { await output.WaitAsync(TimeSpan.FromMilliseconds(250), token); }
+        catch (TimeoutException) {
+            // Console/crash helpers can inherit these handles after Android exits.
+            // Cancel our reads, never shorten the VM's grace period or kill a process.
+            OutputPipeHeldAfterExit = true; _drainStop.Cancel();
+            Process.StandardOutput.Dispose(); Process.StandardError.Dispose();
+            await output.WaitAsync(TimeSpan.FromSeconds(2), token);
+        }
+        OutputDrainSeconds = timer.Elapsed.TotalSeconds;
+    }
     public async Task WaitAsync(CancellationToken token)
     {
+        var timer = Stopwatch.StartNew();
         await Process.WaitForExitAsync(token);
-        await Task.WhenAll(_stdout, _stderr);
+        timer.Restart();
+        await Task.WhenAll(_stdout, _stderr).WaitAsync(token);
+        OutputDrainSeconds = timer.Elapsed.TotalSeconds;
     }
     public async Task ForceStopAsync()
     {
         if (!Process.HasExited) Process.Kill(entireProcessTree: true);
         await WaitAsync(CancellationToken.None);
     }
-    public void Dispose() => Process.Dispose();
+    public void Dispose() { _drainStop.Dispose(); Process.Dispose(); }
 }

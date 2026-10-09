@@ -12,4 +12,6 @@ tools/gateway/**/__pycache__/
 tools/gateway/videobridge_gateway/proto/*_pb2*.py
 phase0.local.json
 android.local.json
+docs/performance/*.webview/
+docs/performance/*.views/
 diagnostic-apk/build/

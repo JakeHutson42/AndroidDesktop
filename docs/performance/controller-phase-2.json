@@ -1,0 +1,1854 @@
+{
+  "mode": "controller",
+  "workload": "Android Home after 15-second settling period; no game workload",
+  "requestedSampleSeconds": 20,
+  "ready": true,
+  "error": null,
+  "graphics": "GLES: Google (Google Inc.), Android Emulator OpenGL ES Translator (Google SwiftShader), OpenGL ES 3.0 (OpenGL ES 3.0 SwiftShader 4.0.0.1)\r",
+  "rendererLog": "INFO         | Graphics backend: gfxstream\r\nINFO         | Selecting Vulkan device: llvmpipe (LLVM 21.1.2, 256 bits), Version: 1.4.318\r\nWHPX on Windows 10.0.26200 detected.\r",
+  "samples": [
+    {
+      "seconds": 0.0166971,
+      "processes": []
+    },
+    {
+      "seconds": 1.0580747,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 9052,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 12.9296875
+        },
+        {
+          "name": "conhost",
+          "id": 29148,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.421875
+        },
+        {
+          "name": "qemu-system-x86_64-headless",
+          "id": 14940,
+          "cpuPercentOfMachine": 17.542737978600787,
+          "workingSetMiB": 3825.8046875
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 22532,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.796875
+        },
+        {
+          "name": "netsimd",
+          "id": 25156,
+          "cpuPercentOfMachine": 0.09462986393261197,
+          "workingSetMiB": 27.109375
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 26640,
+          "cpuPercentOfMachine": 0.28359096400236966,
+          "workingSetMiB": 189.9765625
+        },
+        {
+          "name": "python",
+          "id": 28708,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 4.63671875
+        },
+        {
+          "name": "conhost",
+          "id": 12644,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.4375
+        },
+        {
+          "name": "python",
+          "id": 24448,
+          "cpuPercentOfMachine": 1.7904223480122452,
+          "workingSetMiB": 55.640625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 11492,
+          "cpuPercentOfMachine": 0.09413429989046804,
+          "workingSetMiB": 141.84375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 2748,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 14.0078125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 29412,
+          "cpuPercentOfMachine": 0.6576249306389833,
+          "workingSetMiB": 171.4765625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27372,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 42.546875
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 14140,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.91015625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27444,
+          "cpuPercentOfMachine": 1.4986682713847015,
+          "workingSetMiB": 86.0703125
+        }
+      ]
+    },
+    {
+      "seconds": 2.1030374,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 9052,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 12.9296875
+        },
+        {
+          "name": "conhost",
+          "id": 29148,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.421875
+        },
+        {
+          "name": "qemu-system-x86_64-headless",
+          "id": 14940,
+          "cpuPercentOfMachine": 16.0146854343266,
+          "workingSetMiB": 3826.546875
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 22532,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.796875
+        },
+        {
+          "name": "netsimd",
+          "id": 25156,
+          "cpuPercentOfMachine": 0.28091491569927657,
+          "workingSetMiB": 28.9140625
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 26640,
+          "cpuPercentOfMachine": 0.37454837256874357,
+          "workingSetMiB": 188.73046875
+        },
+        {
+          "name": "python",
+          "id": 28708,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 4.63671875
+        },
+        {
+          "name": "conhost",
+          "id": 12644,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.4375
+        },
+        {
+          "name": "python",
+          "id": 24448,
+          "cpuPercentOfMachine": 1.5916437841470132,
+          "workingSetMiB": 55.67578125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 11492,
+          "cpuPercentOfMachine": 0.18721414048232785,
+          "workingSetMiB": 154.37109375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 2748,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 14.0078125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 29412,
+          "cpuPercentOfMachine": 1.2162698215006302,
+          "workingSetMiB": 171.51171875
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27372,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 42.546875
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 14140,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.91015625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27444,
+          "cpuPercentOfMachine": 0.8414716985467507,
+          "workingSetMiB": 98.65234375
+        }
+      ]
+    },
+    {
+      "seconds": 3.1447793,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 9052,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 12.9296875
+        },
+        {
+          "name": "conhost",
+          "id": 29148,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.421875
+        },
+        {
+          "name": "qemu-system-x86_64-headless",
+          "id": 14940,
+          "cpuPercentOfMachine": 17.062985953839966,
+          "workingSetMiB": 3819.33984375
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 22532,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.796875
+        },
+        {
+          "name": "netsimd",
+          "id": 25156,
+          "cpuPercentOfMachine": 1.2189206879017682,
+          "workingSetMiB": 28.9375
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 26640,
+          "cpuPercentOfMachine": 0.37498458063404433,
+          "workingSetMiB": 189.15234375
+        },
+        {
+          "name": "python",
+          "id": 28708,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 4.63671875
+        },
+        {
+          "name": "conhost",
+          "id": 12644,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.4375
+        },
+        {
+          "name": "python",
+          "id": 24448,
+          "cpuPercentOfMachine": 1.9678786548177052,
+          "workingSetMiB": 59.24609375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 11492,
+          "cpuPercentOfMachine": 0.18742341729230702,
+          "workingSetMiB": 141.8125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 2748,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 14.0078125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 29412,
+          "cpuPercentOfMachine": 0.09371837267333719,
+          "workingSetMiB": 171.5390625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27372,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 42.546875
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 14140,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.91015625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27444,
+          "cpuPercentOfMachine": 0.9372097199078724,
+          "workingSetMiB": 86.1796875
+        }
+      ]
+    },
+    {
+      "seconds": 4.18781,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 9052,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 12.9296875
+        },
+        {
+          "name": "conhost",
+          "id": 29148,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.421875
+        },
+        {
+          "name": "qemu-system-x86_64-headless",
+          "id": 14940,
+          "cpuPercentOfMachine": 17.46997761738247,
+          "workingSetMiB": 3819.40234375
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 22532,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.796875
+        },
+        {
+          "name": "netsimd",
+          "id": 25156,
+          "cpuPercentOfMachine": 1.4949856983688152,
+          "workingSetMiB": 29.0546875
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 26640,
+          "cpuPercentOfMachine": 0.37381706337927756,
+          "workingSetMiB": 189.51171875
+        },
+        {
+          "name": "python",
+          "id": 28708,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 4.63671875
+        },
+        {
+          "name": "conhost",
+          "id": 12644,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.4375
+        },
+        {
+          "name": "python",
+          "id": 24448,
+          "cpuPercentOfMachine": 1.6832294449107281,
+          "workingSetMiB": 57.38671875
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 11492,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 154.3828125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 2748,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 14.0078125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 29412,
+          "cpuPercentOfMachine": 0.1871331352193255,
+          "workingSetMiB": 171.5546875
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27372,
+          "cpuPercentOfMachine": 0.09358549616352774,
+          "workingSetMiB": 42.56640625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 14140,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.91015625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27444,
+          "cpuPercentOfMachine": 0.936241930523311,
+          "workingSetMiB": 97.609375
+        }
+      ]
+    },
+    {
+      "seconds": 5.2230225,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 9052,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 12.9296875
+        },
+        {
+          "name": "conhost",
+          "id": 29148,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.421875
+        },
+        {
+          "name": "qemu-system-x86_64-headless",
+          "id": 14940,
+          "cpuPercentOfMachine": 15.792543949859239,
+          "workingSetMiB": 3822.58984375
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 22532,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.796875
+        },
+        {
+          "name": "netsimd",
+          "id": 25156,
+          "cpuPercentOfMachine": 0.6619308707782156,
+          "workingSetMiB": 29.3125
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 26640,
+          "cpuPercentOfMachine": 0.37818897414431507,
+          "workingSetMiB": 189.8515625
+        },
+        {
+          "name": "python",
+          "id": 28708,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 4.63671875
+        },
+        {
+          "name": "conhost",
+          "id": 12644,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.4375
+        },
+        {
+          "name": "python",
+          "id": 24448,
+          "cpuPercentOfMachine": 2.0785166167169646,
+          "workingSetMiB": 56.97265625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 11492,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 141.85546875
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 2748,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 14.0078125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 29412,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 171.578125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27372,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 42.56640625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 14140,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.91015625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27444,
+          "cpuPercentOfMachine": 0.8491585284319713,
+          "workingSetMiB": 95.79296875
+        }
+      ]
+    },
+    {
+      "seconds": 6.2571889,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 9052,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 12.9296875
+        },
+        {
+          "name": "conhost",
+          "id": 29148,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.421875
+        },
+        {
+          "name": "qemu-system-x86_64-headless",
+          "id": 14940,
+          "cpuPercentOfMachine": 17.24476558830917,
+          "workingSetMiB": 3737.25
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 22532,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.796875
+        },
+        {
+          "name": "netsimd",
+          "id": 25156,
+          "cpuPercentOfMachine": 1.790294510578016,
+          "workingSetMiB": 29.3125
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 26640,
+          "cpuPercentOfMachine": 0.7538887390493137,
+          "workingSetMiB": 191.0546875
+        },
+        {
+          "name": "python",
+          "id": 28708,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 4.63671875
+        },
+        {
+          "name": "conhost",
+          "id": 12644,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.4375
+        },
+        {
+          "name": "python",
+          "id": 24448,
+          "cpuPercentOfMachine": 1.697217916770099,
+          "workingSetMiB": 55.38671875
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 11492,
+          "cpuPercentOfMachine": 0.09431101017576264,
+          "workingSetMiB": 154.71875
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 2748,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 14.0078125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 29412,
+          "cpuPercentOfMachine": 0.28302741214829125,
+          "workingSetMiB": 171.61328125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27372,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 42.56640625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 14140,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.91015625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27444,
+          "cpuPercentOfMachine": 0.9439782584739946,
+          "workingSetMiB": 98.85546875
+        }
+      ]
+    },
+    {
+      "seconds": 7.2945252,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 9052,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 12.9296875
+        },
+        {
+          "name": "conhost",
+          "id": 29148,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.421875
+        },
+        {
+          "name": "qemu-system-x86_64-headless",
+          "id": 14940,
+          "cpuPercentOfMachine": 14.120833728967716,
+          "workingSetMiB": 3729.3359375
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 22532,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.796875
+        },
+        {
+          "name": "netsimd",
+          "id": 25156,
+          "cpuPercentOfMachine": 1.4119023534055297,
+          "workingSetMiB": 29.3125
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 26640,
+          "cpuPercentOfMachine": 0.3765311382696561,
+          "workingSetMiB": 191.44140625
+        },
+        {
+          "name": "python",
+          "id": 28708,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 4.63671875
+        },
+        {
+          "name": "conhost",
+          "id": 12644,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.4375
+        },
+        {
+          "name": "python",
+          "id": 24448,
+          "cpuPercentOfMachine": 1.7884879104181393,
+          "workingSetMiB": 60.1875
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 11492,
+          "cpuPercentOfMachine": 0.09413274827284931,
+          "workingSetMiB": 139.0234375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 2748,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 14.0078125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 29412,
+          "cpuPercentOfMachine": 0.0941421948775849,
+          "workingSetMiB": 171.66015625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27372,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 42.56640625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 14140,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.91015625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27444,
+          "cpuPercentOfMachine": 0.6590054017535527,
+          "workingSetMiB": 82.1875
+        }
+      ]
+    },
+    {
+      "seconds": 8.3299026,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 9052,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 12.9296875
+        },
+        {
+          "name": "conhost",
+          "id": 29148,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.421875
+        },
+        {
+          "name": "qemu-system-x86_64-headless",
+          "id": 14940,
+          "cpuPercentOfMachine": 13.326663564426061,
+          "workingSetMiB": 3729.3828125
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 22532,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.796875
+        },
+        {
+          "name": "netsimd",
+          "id": 25156,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 28.71484375
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 26640,
+          "cpuPercentOfMachine": 0.3779424970105655,
+          "workingSetMiB": 191.7890625
+        },
+        {
+          "name": "python",
+          "id": 28708,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 4.63671875
+        },
+        {
+          "name": "conhost",
+          "id": 12644,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.4375
+        },
+        {
+          "name": "python",
+          "id": 24448,
+          "cpuPercentOfMachine": 1.6999178865619924,
+          "workingSetMiB": 58.5078125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 11492,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 151.5859375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 2748,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 14.0078125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 29412,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 171.69140625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27372,
+          "cpuPercentOfMachine": 0.18873548361411213,
+          "workingSetMiB": 42.56640625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 14140,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.91015625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27444,
+          "cpuPercentOfMachine": 1.0376360605755603,
+          "workingSetMiB": 94.7265625
+        }
+      ]
+    },
+    {
+      "seconds": 9.3738296,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 9052,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 12.9296875
+        },
+        {
+          "name": "conhost",
+          "id": 29148,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.421875
+        },
+        {
+          "name": "qemu-system-x86_64-headless",
+          "id": 14940,
+          "cpuPercentOfMachine": 12.928144160633833,
+          "workingSetMiB": 3729.3828125
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 22532,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.796875
+        },
+        {
+          "name": "netsimd",
+          "id": 25156,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 28.73046875
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 26640,
+          "cpuPercentOfMachine": 0.3747603452563327,
+          "workingSetMiB": 192.1640625
+        },
+        {
+          "name": "python",
+          "id": 28708,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 4.63671875
+        },
+        {
+          "name": "conhost",
+          "id": 12644,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.4375
+        },
+        {
+          "name": "python",
+          "id": 24448,
+          "cpuPercentOfMachine": 1.7790488184778737,
+          "workingSetMiB": 55.80859375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 11492,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 135.8828125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 2748,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 14.0078125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 29412,
+          "cpuPercentOfMachine": 0.2807987900402601,
+          "workingSetMiB": 171.69921875
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27372,
+          "cpuPercentOfMachine": 0.1871948873092769,
+          "workingSetMiB": 42.578125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 14140,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.91015625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27444,
+          "cpuPercentOfMachine": 0.9355738853923008,
+          "workingSetMiB": 89.70703125
+        }
+      ]
+    },
+    {
+      "seconds": 10.4151334,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 9052,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 12.9296875
+        },
+        {
+          "name": "conhost",
+          "id": 29148,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.421875
+        },
+        {
+          "name": "qemu-system-x86_64-headless",
+          "id": 14940,
+          "cpuPercentOfMachine": 12.814537365523757,
+          "workingSetMiB": 3727.375
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 22532,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.796875
+        },
+        {
+          "name": "netsimd",
+          "id": 25156,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 28.109375
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 26640,
+          "cpuPercentOfMachine": 0.28073319040924627,
+          "workingSetMiB": 192.49609375
+        },
+        {
+          "name": "python",
+          "id": 28708,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 4.63671875
+        },
+        {
+          "name": "conhost",
+          "id": 12644,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.4375
+        },
+        {
+          "name": "python",
+          "id": 24448,
+          "cpuPercentOfMachine": 1.685004952506645,
+          "workingSetMiB": 58.03125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 11492,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 148.4453125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 2748,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 14.0078125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 29412,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 171.7421875
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27372,
+          "cpuPercentOfMachine": 0.18737803338953032,
+          "workingSetMiB": 42.578125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 14140,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.91015625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27444,
+          "cpuPercentOfMachine": 0.8438240134918715,
+          "workingSetMiB": 93.08984375
+        }
+      ]
+    },
+    {
+      "seconds": 11.4600837,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 9052,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 12.9296875
+        },
+        {
+          "name": "conhost",
+          "id": 29148,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.421875
+        },
+        {
+          "name": "qemu-system-x86_64-headless",
+          "id": 14940,
+          "cpuPercentOfMachine": 14.150313207793044,
+          "workingSetMiB": 3735.2890625
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 22532,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.796875
+        },
+        {
+          "name": "netsimd",
+          "id": 25156,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 26.9140625
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 26640,
+          "cpuPercentOfMachine": 0.28084153508444404,
+          "workingSetMiB": 192.83203125
+        },
+        {
+          "name": "python",
+          "id": 28708,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 4.609375
+        },
+        {
+          "name": "conhost",
+          "id": 12644,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.41796875
+        },
+        {
+          "name": "python",
+          "id": 24448,
+          "cpuPercentOfMachine": 1.9661838312402888,
+          "workingSetMiB": 55.7265625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 11492,
+          "cpuPercentOfMachine": 0.09359505750049046,
+          "workingSetMiB": 161.01171875
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 2748,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 14.0078125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 29412,
+          "cpuPercentOfMachine": 0.09355997893430458,
+          "workingSetMiB": 171.7578125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27372,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 42.578125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 14140,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.91015625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27444,
+          "cpuPercentOfMachine": 0.7478010103665081,
+          "workingSetMiB": 105.90625
+        }
+      ]
+    },
+    {
+      "seconds": 12.4856131,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 9052,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 12.9296875
+        },
+        {
+          "name": "conhost",
+          "id": 29148,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.421875
+        },
+        {
+          "name": "qemu-system-x86_64-headless",
+          "id": 14940,
+          "cpuPercentOfMachine": 14.793787888483962,
+          "workingSetMiB": 3736.1171875
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 22532,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.796875
+        },
+        {
+          "name": "netsimd",
+          "id": 25156,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 26.390625
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 26640,
+          "cpuPercentOfMachine": 0.37977918993791504,
+          "workingSetMiB": 193.1796875
+        },
+        {
+          "name": "python",
+          "id": 28708,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 4.609375
+        },
+        {
+          "name": "conhost",
+          "id": 12644,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.41796875
+        },
+        {
+          "name": "python",
+          "id": 24448,
+          "cpuPercentOfMachine": 1.9951823028396876,
+          "workingSetMiB": 58.01953125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 11492,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 142.37109375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 2748,
+          "cpuPercentOfMachine": 0.09509658282830201,
+          "workingSetMiB": 22.84375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 29412,
+          "cpuPercentOfMachine": 0.1902358286300137,
+          "workingSetMiB": 171.6875
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27372,
+          "cpuPercentOfMachine": 0.19033981522529464,
+          "workingSetMiB": 42.484375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 14140,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.91015625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27444,
+          "cpuPercentOfMachine": 1.1424313454207404,
+          "workingSetMiB": 87.13671875
+        }
+      ]
+    },
+    {
+      "seconds": 13.5141446,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 9052,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 12.9296875
+        },
+        {
+          "name": "conhost",
+          "id": 29148,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.421875
+        },
+        {
+          "name": "qemu-system-x86_64-headless",
+          "id": 14940,
+          "cpuPercentOfMachine": 16.236038662636183,
+          "workingSetMiB": 3727.375
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 22532,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.796875
+        },
+        {
+          "name": "netsimd",
+          "id": 25156,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 26.39453125
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 26640,
+          "cpuPercentOfMachine": 0.4747073262995916,
+          "workingSetMiB": 193.5859375
+        },
+        {
+          "name": "python",
+          "id": 28708,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 4.609375
+        },
+        {
+          "name": "conhost",
+          "id": 12644,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.41796875
+        },
+        {
+          "name": "python",
+          "id": 24448,
+          "cpuPercentOfMachine": 2.0887654400326046,
+          "workingSetMiB": 59.90234375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 11492,
+          "cpuPercentOfMachine": 0.09494076376876226,
+          "workingSetMiB": 154.65234375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 2748,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.8359375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 29412,
+          "cpuPercentOfMachine": 0.1898775402273038,
+          "workingSetMiB": 171.71484375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27372,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 42.484375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 14140,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.91015625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27444,
+          "cpuPercentOfMachine": 0.9494991165799451,
+          "workingSetMiB": 99.7265625
+        }
+      ]
+    },
+    {
+      "seconds": 14.5468171,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 9052,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 12.9296875
+        },
+        {
+          "name": "conhost",
+          "id": 29148,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.421875
+        },
+        {
+          "name": "qemu-system-x86_64-headless",
+          "id": 14940,
+          "cpuPercentOfMachine": 18.016033325999278,
+          "workingSetMiB": 3727.375
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 22532,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.796875
+        },
+        {
+          "name": "netsimd",
+          "id": 25156,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 26.7578125
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 26640,
+          "cpuPercentOfMachine": 0.5685811620224513,
+          "workingSetMiB": 194.1171875
+        },
+        {
+          "name": "python",
+          "id": 28708,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 4.609375
+        },
+        {
+          "name": "conhost",
+          "id": 12644,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.41796875
+        },
+        {
+          "name": "python",
+          "id": 24448,
+          "cpuPercentOfMachine": 1.988819576106405,
+          "workingSetMiB": 56.0234375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 11492,
+          "cpuPercentOfMachine": 0.18937263784146463,
+          "workingSetMiB": 135.81640625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 2748,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.8359375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 29412,
+          "cpuPercentOfMachine": 0.09464669337344972,
+          "workingSetMiB": 171.74609375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27372,
+          "cpuPercentOfMachine": 0.09462823174942692,
+          "workingSetMiB": 42.49609375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 14140,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.91015625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27444,
+          "cpuPercentOfMachine": 0.9458800431599766,
+          "workingSetMiB": 90.60546875
+        }
+      ]
+    },
+    {
+      "seconds": 15.5906441,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 9052,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 12.9296875
+        },
+        {
+          "name": "conhost",
+          "id": 29148,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.421875
+        },
+        {
+          "name": "qemu-system-x86_64-headless",
+          "id": 14940,
+          "cpuPercentOfMachine": 16.180729686395445,
+          "workingSetMiB": 3727.375
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 22532,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.796875
+        },
+        {
+          "name": "netsimd",
+          "id": 25156,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 26.7578125
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 26640,
+          "cpuPercentOfMachine": 0.28062681091848607,
+          "workingSetMiB": 194.4765625
+        },
+        {
+          "name": "python",
+          "id": 28708,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 4.609375
+        },
+        {
+          "name": "conhost",
+          "id": 12644,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.41796875
+        },
+        {
+          "name": "python",
+          "id": 24448,
+          "cpuPercentOfMachine": 1.68411834425652,
+          "workingSetMiB": 55.97265625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 11492,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 148.37890625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 2748,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.8359375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 29412,
+          "cpuPercentOfMachine": 0.18710387863646116,
+          "workingSetMiB": 171.7734375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27372,
+          "cpuPercentOfMachine": 0.18707543753263195,
+          "workingSetMiB": 42.49609375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 14140,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.91015625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27444,
+          "cpuPercentOfMachine": 1.0288858343608924,
+          "workingSetMiB": 93.6640625
+        }
+      ]
+    },
+    {
+      "seconds": 16.636676,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 9052,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 12.9296875
+        },
+        {
+          "name": "conhost",
+          "id": 29148,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.421875
+        },
+        {
+          "name": "qemu-system-x86_64-headless",
+          "id": 14940,
+          "cpuPercentOfMachine": 16.25245692314314,
+          "workingSetMiB": 3727.375
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 22532,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.796875
+        },
+        {
+          "name": "netsimd",
+          "id": 25156,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 26.7578125
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 26640,
+          "cpuPercentOfMachine": 0.6535380575631183,
+          "workingSetMiB": 195.69921875
+        },
+        {
+          "name": "python",
+          "id": 28708,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 4.609375
+        },
+        {
+          "name": "conhost",
+          "id": 12644,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.41796875
+        },
+        {
+          "name": "python",
+          "id": 24448,
+          "cpuPercentOfMachine": 1.7729298247173033,
+          "workingSetMiB": 59.76171875
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 11492,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 159.3125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 2748,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.8359375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 29412,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 171.7890625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27372,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 42.49609375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 14140,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.91015625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27444,
+          "cpuPercentOfMachine": 0.6535050695861161,
+          "workingSetMiB": 103.51953125
+        }
+      ]
+    },
+    {
+      "seconds": 17.6661142,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 9052,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 12.9296875
+        },
+        {
+          "name": "conhost",
+          "id": 29148,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.421875
+        },
+        {
+          "name": "qemu-system-x86_64-headless",
+          "id": 14940,
+          "cpuPercentOfMachine": 18.1099067675451,
+          "workingSetMiB": 3727.375
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 22532,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.796875
+        },
+        {
+          "name": "netsimd",
+          "id": 25156,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 26.7578125
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 26640,
+          "cpuPercentOfMachine": 0.5692174213099265,
+          "workingSetMiB": 200.27734375
+        },
+        {
+          "name": "python",
+          "id": 28708,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 4.609375
+        },
+        {
+          "name": "conhost",
+          "id": 12644,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.41796875
+        },
+        {
+          "name": "python",
+          "id": 24448,
+          "cpuPercentOfMachine": 1.7083038057449447,
+          "workingSetMiB": 60.62109375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 11492,
+          "cpuPercentOfMachine": 0.09490334132647237,
+          "workingSetMiB": 137.33203125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 2748,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.8359375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 29412,
+          "cpuPercentOfMachine": 0.09492666230346264,
+          "workingSetMiB": 171.8125
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27372,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 42.49609375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 14140,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.91015625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27444,
+          "cpuPercentOfMachine": 0.8540328838704272,
+          "workingSetMiB": 82.76171875
+        }
+      ]
+    },
+    {
+      "seconds": 18.6960089,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 9052,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 12.9296875
+        },
+        {
+          "name": "conhost",
+          "id": 29148,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.421875
+        },
+        {
+          "name": "qemu-system-x86_64-headless",
+          "id": 14940,
+          "cpuPercentOfMachine": 17.06824530791661,
+          "workingSetMiB": 3727.31640625
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 22532,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.796875
+        },
+        {
+          "name": "netsimd",
+          "id": 25156,
+          "cpuPercentOfMachine": 0.47406517321179403,
+          "workingSetMiB": 26.76171875
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 26640,
+          "cpuPercentOfMachine": 0.5688253561629433,
+          "workingSetMiB": 205.43359375
+        },
+        {
+          "name": "python",
+          "id": 28708,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 4.609375
+        },
+        {
+          "name": "conhost",
+          "id": 12644,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.41796875
+        },
+        {
+          "name": "python",
+          "id": 24448,
+          "cpuPercentOfMachine": 1.896089306400945,
+          "workingSetMiB": 61.40625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 11492,
+          "cpuPercentOfMachine": 0.09480747499145671,
+          "workingSetMiB": 149.90234375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 2748,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.8359375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 29412,
+          "cpuPercentOfMachine": 0.28443954578023384,
+          "workingSetMiB": 171.84765625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27372,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 42.49609375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 14140,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.91015625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27444,
+          "cpuPercentOfMachine": 0.7585262231132188,
+          "workingSetMiB": 95.3125
+        }
+      ]
+    },
+    {
+      "seconds": 19.7240271,
+      "processes": [
+        {
+          "name": "emulator",
+          "id": 9052,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 12.9296875
+        },
+        {
+          "name": "conhost",
+          "id": 29148,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.421875
+        },
+        {
+          "name": "qemu-system-x86_64-headless",
+          "id": 14940,
+          "cpuPercentOfMachine": 14.696529760273272,
+          "workingSetMiB": 3727.31640625
+        },
+        {
+          "name": "crashpad_handler",
+          "id": 22532,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 8.796875
+        },
+        {
+          "name": "netsimd",
+          "id": 25156,
+          "cpuPercentOfMachine": 0.1897055255458614,
+          "workingSetMiB": 26.76171875
+        },
+        {
+          "name": "AndroidDesktop",
+          "id": 26640,
+          "cpuPercentOfMachine": 0.0948722614370348,
+          "workingSetMiB": 205.76953125
+        },
+        {
+          "name": "python",
+          "id": 28708,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 4.609375
+        },
+        {
+          "name": "conhost",
+          "id": 12644,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 7.41796875
+        },
+        {
+          "name": "python",
+          "id": 24448,
+          "cpuPercentOfMachine": 1.7086880600122596,
+          "workingSetMiB": 58.65234375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 11492,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 162.46484375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 2748,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.8359375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 29412,
+          "cpuPercentOfMachine": 0.09498263140003609,
+          "workingSetMiB": 171.8671875
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27372,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 42.49609375
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 14140,
+          "cpuPercentOfMachine": 0,
+          "workingSetMiB": 22.91015625
+        },
+        {
+          "name": "msedgewebview2",
+          "id": 27444,
+          "cpuPercentOfMachine": 1.1399511247323213,
+          "workingSetMiB": 109.70703125
+        }
+      ]
+    }
+  ],
+  "dispatcherDelayMs": [
+    0.8782,
+    0.054,
+    0.4149,
+    0.061,
+    0.0726,
+    0.0876,
+    0.0532,
+    0.0707,
+    0.0773,
+    0.0591,
+    0.0734,
+    0.0609,
+    0.0513,
+    0.0642,
+    0.065,
+    0.0694,
+    0.0503,
+    0.069,
+    0.1037,
+    0.0747
+  ],
+  "retainedDuringResizeAndNavigation": false,
+  "nativeDetached": false,
+  "nativeDpi": 0,
+  "nativeFocus": false,
+  "nativeTouch": false,
+  "nativeKey": false,
+  "inputEvidence": "",
+  "preservedPackage": "    versionName=8.3.0\r\n    lastUpdateTime=2026-10-08 00:16:16\r\n      firstInstallTime=2026-10-08 00:16:16\r",
+  "resizeCount": null,
+  "gracefulStop": true,
+  "ownedProcessHandlesAfterStop": false,
+  "limitations": "No presented frame-rate, physical mixed-monitor DPI, physical input or game performance claim. Native diagnostic input uses scoped window messages. Dispatcher delay is not input-to-visible latency."
+}

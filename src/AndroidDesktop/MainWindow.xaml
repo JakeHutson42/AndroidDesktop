@@ -1,4 +1,4 @@
-<Window x:Class="AndroidDesktop.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="Android Desktop" Width="1440" Height="900" MinWidth="850" MinHeight="600" Background="{DynamicResource BackgroundBrush}" Foreground="{DynamicResource TextPrimaryBrush}" FontFamily="Segoe UI" FontSize="{DynamicResource BodyFontSize}" UseLayoutRounding="True" SnapsToDevicePixels="True" Closing="OnClosing" Deactivated="OnDeactivated" PreviewKeyDown="OnKeyDown" LocationChanged="OnBoundsChanged" SizeChanged="OnBoundsChanged" StateChanged="OnBoundsChanged" Icon="{DynamicResource AndroidAppIcon}">
+<Window x:Class="AndroidDesktop.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:controls="clr-namespace:AndroidDesktop.Controls" Title="Android Desktop" Width="1440" Height="900" MinWidth="850" MinHeight="600" Background="{DynamicResource BackgroundBrush}" Foreground="{DynamicResource TextPrimaryBrush}" FontFamily="Segoe UI" FontSize="{DynamicResource BodyFontSize}" UseLayoutRounding="True" SnapsToDevicePixels="True" Closing="OnClosing" Deactivated="OnDeactivated" PreviewKeyDown="OnKeyDown" LocationChanged="OnBoundsChanged" SizeChanged="OnBoundsChanged" StateChanged="OnBoundsChanged" Icon="{DynamicResource AndroidAppIcon}">
   <Grid x:Name="ShellRoot" Background="{DynamicResource BackgroundBrush}">
     <Grid.RowDefinitions>
       <RowDefinition Height="*" />
@@ -128,20 +128,85 @@
                 </Grid.ColumnDefinitions>
                 <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Background="{DynamicResource ViewportBrush}" CornerRadius="4">
                   <Grid>
-                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="24" IsHitTestVisible="False">
-                      <StackPanel.Style>
-                        <Style xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" TargetType="StackPanel">
+                    <ContentControl x:Name="ViewportHost" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                      <ContentControl.Style>
+                        <Style TargetType="ContentControl">
                           <Style.Triggers>
-                            <DataTrigger Binding="{Binding InputReady}" Value="True">
-                              <Setter Property="Visibility" Value="Collapsed" />
-                            </DataTrigger>
+                            <DataTrigger Binding="{Binding InputReady}" Value="False"><Setter Property="Visibility" Value="Hidden" /></DataTrigger>
+                            <DataTrigger Binding="{Binding IsStarting}" Value="True"><Setter Property="Visibility" Value="Hidden" /></DataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </ContentControl.Style>
+                    </ContentControl>
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="24" MaxWidth="420">
+                      <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding InputReady}" Value="True"><Setter Property="Visibility" Value="Collapsed" /></DataTrigger>
+                            <DataTrigger Binding="{Binding IsStarting}" Value="True"><Setter Property="Visibility" Value="Collapsed" /></DataTrigger>
                           </Style.Triggers>
                         </Style>
                       </StackPanel.Style>
-                      <TextBlock Text="Android display" Style="{StaticResource PanelHeading}" HorizontalAlignment="Center" />
-                      <TextBlock Text="Start your device to connect the display" Style="{StaticResource SecondaryText}" TextAlignment="Center" />
+                      <TextBlock Text="Android device" Style="{StaticResource PanelHeading}" TextAlignment="Center" />
+                      <TextBlock Text="{Binding Status}" Style="{StaticResource SecondaryText}" TextWrapping="Wrap" TextAlignment="Center" Margin="0,8,0,0" AutomationProperties.LiveSetting="Polite" />
                     </StackPanel>
-                    <ContentControl x:Name="ViewportHost" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+                    <Border Padding="16" Margin="16" MaxWidth="420" HorizontalAlignment="Center" VerticalAlignment="Center"
+                            Background="{DynamicResource PanelBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="4">
+                      <Border.Style>
+                        <Style TargetType="Border">
+                          <Setter Property="Visibility" Value="Collapsed" />
+                          <Style.Triggers><DataTrigger Binding="{Binding IsStarting}" Value="True"><Setter Property="Visibility" Value="Visible" /></DataTrigger></Style.Triggers>
+                        </Style>
+                      </Border.Style>
+                      <DockPanel LastChildFill="True">
+                        <StackPanel DockPanel.Dock="Top">
+                          <TextBlock Text="{Binding StartupTitle}" FontSize="20" FontWeight="SemiBold" TextWrapping="Wrap" />
+                          <TextBlock Text="{Binding StartupMessage}" TextWrapping="Wrap" Style="{StaticResource SecondaryText}" Margin="0,4,0,12" />
+                        </StackPanel>
+                        <StackPanel DockPanel.Dock="Bottom">
+                          <controls:SmoothProgressBar Progress="{Binding StartupProgress}" Maximum="100" Height="5" Margin="0,6,0,8" Foreground="{DynamicResource AccentBrush}" Background="{DynamicResource BorderBrush}">
+                            <controls:SmoothProgressBar.Template>
+                              <ControlTemplate TargetType="controls:SmoothProgressBar">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="2">
+                                  <Grid x:Name="PART_Track"><Border x:Name="PART_Indicator" HorizontalAlignment="Left" Background="{TemplateBinding Foreground}" CornerRadius="2" /></Grid>
+                                </Border>
+                              </ControlTemplate>
+                            </controls:SmoothProgressBar.Template>
+                          </controls:SmoothProgressBar>
+                          <TextBlock Text="{Binding StartupTiming}" Style="{StaticResource SecondaryText}" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+                        </StackPanel>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <ItemsControl ItemsSource="{Binding StartupSteps}">
+                          <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                              <Grid Margin="0,0,0,4">
+                                <Grid.ColumnDefinitions><ColumnDefinition Width="26" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+                                <TextBlock FontFamily="Segoe MDL2 Assets">
+                                  <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                      <Setter Property="Text" Value="&#xECCA;" /><Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+                                      <Style.Triggers>
+                                        <DataTrigger Binding="{Binding State}" Value="Current"><Setter Property="Text" Value="&#xE768;" /><Setter Property="Foreground" Value="{DynamicResource AccentBrush}" /></DataTrigger>
+                                        <DataTrigger Binding="{Binding State}" Value="Complete"><Setter Property="Text" Value="&#xE73E;" /><Setter Property="Foreground" Value="{DynamicResource AccentBrush}" /></DataTrigger>
+                                      </Style.Triggers>
+                                    </Style>
+                                  </TextBlock.Style>
+                                </TextBlock>
+                                <TextBlock Grid.Column="1" Text="{Binding Title}" TextWrapping="Wrap">
+                                  <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                      <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+                                      <Style.Triggers><DataTrigger Binding="{Binding State}" Value="Current"><Setter Property="FontWeight" Value="SemiBold" /><Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" /></DataTrigger></Style.Triggers>
+                                    </Style>
+                                  </TextBlock.Style>
+                                </TextBlock>
+                              </Grid>
+                            </DataTemplate>
+                          </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        </ScrollViewer>
+                      </DockPanel>
+                    </Border>
                   </Grid>
                 </Border>
                 <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="12,0,0,0">
@@ -157,11 +222,7 @@
                   </StackPanel>
                 </ScrollViewer>
               </Grid>
-              <Expander x:Name="StatusDetails" Grid.Row="2" Header="Device status" IsExpanded="True" Tag="Inline">
-                <Border Background="{DynamicResource PanelBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="4" Padding="12" Margin="0,8,0,0">
-                  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" Foreground="{DynamicResource TextSecondaryBrush}" AutomationProperties.LiveSetting="Polite" />
-                </Border>
-              </Expander>
+
             </Grid>
             <Border Grid.Column="2" x:Name="AutomationPanel" Style="{StaticResource Panel}" Padding="16">
               <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
@@ -316,9 +377,8 @@
             <Border Style="{StaticResource Panel}" Margin="0,24,0,0">
               <StackPanel IsEnabled="{Binding SetupEditingEnabled}">
                 <TextBlock Text="Runtime and dependencies" Style="{StaticResource PanelHeading}" />
-                <CheckBox IsChecked="{Binding ShowStandaloneWindow}" Margin="0,4,0,10">
-                  <TextBlock Text="Use Android's own emulator window (embedded display and recording unavailable)" TextWrapping="Wrap" />
-                </CheckBox>
+                <CheckBox IsChecked="{Binding UseNativeDisplay}" Margin="0,4,0,10"><TextBlock Text="Experimental native viewport (restart device after saving; recording and audio unavailable)" TextWrapping="Wrap" /></CheckBox>
+
                 <CheckBox IsChecked="{Binding UseControllerDisplay}" Margin="0,4,0,10">
                   <TextBlock Text="Use embedded controller display (up to 15 fps; optional audio)" TextWrapping="Wrap" />
                 </CheckBox>

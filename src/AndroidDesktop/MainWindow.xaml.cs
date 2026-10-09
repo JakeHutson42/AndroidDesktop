@@ -19,9 +19,9 @@ public partial class MainWindow : Window
   _desktop = desktop; _viewModel = desktop.Device; _viewport = viewport;
   InitializeComponent(); DataContext = desktop; ViewportHost.Content = viewport.Control;
   Loaded += (_, _) => UpdateWorkspaceLayout();
+  ShellRoot.SizeChanged += (_, _) => UpdateWorkspaceLayout();
   SourceInitialized += (_, _) => ApplyTitleBarTheme();
-  desktop.PropertyChanged += (_, e) => { if (e.PropertyName == nameof(desktop.Theme)) { ApplyTitleBarTheme(); UpdateWorkspaceLayout(); } };
-  _viewModel.PropertyChanged += (_, e) => { if (e.PropertyName == nameof(_viewModel.State) && _viewModel.State == "Faulted") StatusDetails.IsExpanded = true; };
+  desktop.PropertyChanged += (_, e) => { if (e.PropertyName == nameof(desktop.Theme)) { ApplyTitleBarTheme(); UpdateWorkspaceLayout(); (viewport as WebRtcViewport)?.NativeHost?.RefreshBackground(); } };
   _viewModel.ExitFullscreen += () => { if (_fullscreen) ToggleFullscreen(); };
   desktop.RestoreBounds += RestoreWindow;
   desktop.ShowSetup += show => ShellNavigation.SelectedIndex = show ? 1 : 0;
@@ -48,7 +48,10 @@ public partial class MainWindow : Window
  }
  [System.Runtime.InteropServices.DllImport("dwmapi.dll")]
  private static extern int DwmSetWindowAttribute(IntPtr window, int attribute, ref int value, int size);
- private void OnPageChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) => _viewModel.ReleaseAllInput();
+ private void OnPageChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+ {
+  if (ReferenceEquals(e.OriginalSource, ShellNavigation)) _viewModel.ReleaseAllInput();
+ }
  private void OnFullscreen(object sender, RoutedEventArgs e) => ToggleFullscreen();
  private void OnApkDragOver(object sender, DragEventArgs e)
  {
@@ -77,6 +80,24 @@ public partial class MainWindow : Window
  private bool _libraryOpen, _automationOpen;
  private int _layoutMode = -1;
  private void OnProfileSettings(object sender, RoutedEventArgs e) => ShellNavigation.SelectedIndex = 1;
+ public async Task<bool> CheckNativeHostAsync(AndroidDesktop.Adapters.Viewport.NativeEmulatorHost host)
+ {
+  var savedWidth = Width; var savedHeight = Height; var savedPage = ShellNavigation.SelectedIndex;
+  var retained = true;
+  try {
+   for (var cycle = 0; cycle < 5; cycle++)
+   foreach (var size in new[] { (850, 600), (1180, 800), (1440, 900) }) {
+    Width = size.Item1; Height = size.Item2; UpdateLayout();
+    await System.Windows.Threading.Dispatcher.Yield(System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+    retained &= host.Attached && host.GeometryMatches();
+    for (var page = 0; page < 3; page++) { ShellNavigation.SelectedIndex = page; UpdateLayout(); retained &= host.Attached && host.GeometryMatches(); }
+   }
+   ShellNavigation.SelectedIndex = 0; ToggleFullscreen(); UpdateLayout(); retained &= host.Attached && host.GeometryMatches();
+   ToggleFullscreen(); UpdateLayout(); retained &= host.Attached && host.GeometryMatches();
+   WindowState = WindowState.Minimized; await Task.Delay(500); WindowState = WindowState.Normal; UpdateLayout(); retained &= host.Attached && host.GeometryMatches();
+   return retained;
+  } finally { Width = savedWidth; Height = savedHeight; ShellNavigation.SelectedIndex = savedPage; UpdateLayout(); }
+ }
  private void OnLibraryToggle(object sender, RoutedEventArgs e)
  {
   _libraryOpen = !_libraryOpen;
@@ -115,13 +136,10 @@ public partial class MainWindow : Window
   AutomationToggle.Content = _automationOpen ? "Close automation" : "Automation";
   DisplayHeading.Visibility = _fullscreen ? Visibility.Collapsed : Visibility.Visible;
   var largeText = FontSize > 21;
-  HostHeader.Visibility = _fullscreen || largeText ? Visibility.Collapsed : Visibility.Visible;
-  ShellNavigation.Tag = _fullscreen ? "Fullscreen" : largeText ? "LargeText" : null;
+  var compact = width < 850;
+  HostHeader.Visibility = _fullscreen || largeText || compact ? Visibility.Collapsed : Visibility.Visible;
+  ShellNavigation.Tag = _fullscreen ? "Fullscreen" : largeText ? "LargeText" : compact ? "Compact" : null;
   DisplayDetailsLabel.Visibility = !_fullscreen && !largeText ? Visibility.Visible : Visibility.Collapsed;
-  var compactStatus = !_fullscreen && largeText && Height < 800;
-  if (compactStatus && Equals(StatusDetails.Tag, "Inline")) StatusDetails.IsExpanded = _viewModel.State == "Faulted";
-  if (!compactStatus) StatusDetails.IsExpanded = true;
-  StatusDetails.Tag = compactStatus ? null : "Inline";
  }
  private void OnBoundsChanged(object? sender, EventArgs e)
  {
@@ -192,6 +210,18 @@ public partial class MainWindow : Window
   await _desktop.SwitchProfileCommand.ExecuteAsync(null);
   var defaultRestored = _desktop.ActiveProfileName == "Default device";
   await _desktop.CheckSetupCommand.ExecuteAsync(null);
+  var viewportUnloads = 0;
+  RoutedEventHandler unloaded = (_, _) => viewportUnloads++;
+  _viewport.Control.Unloaded += unloaded;
+  for (var cycle = 0; cycle < 20; cycle++)
+  for (var page = 0; page < ShellNavigation.Items.Count; page++) {
+   ShellNavigation.SelectedIndex = page;
+   UpdateLayout();
+   await System.Windows.Threading.Dispatcher.Yield(System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+  }
+  _viewport.Control.Unloaded -= unloaded;
+  var viewportRetainedAcrossNavigation = viewportUnloads == 0;
+  if (!viewportRetainedAcrossNavigation) throw new InvalidOperationException("Shell navigation detached the viewport.");
   var pages = new List<string>();
   for (var i = 0; i < ShellNavigation.Items.Count; i++)
   {
@@ -222,6 +252,15 @@ public partial class MainWindow : Window
   adaptiveLayoutVerified &= LibraryPanel.IsVisible && !AutomationPanel.IsVisible;
   if (previewDirectory is not null) CaptureShell(previewDirectory, "library-850");
   Width = 1440; Height = 900; UpdateLayout(); UpdateWorkspaceLayout();
+  if (previewDirectory is not null) {
+   _viewModel.IsStarting = true; _viewModel.StartupProgress = 65;
+   _viewModel.StartupMessage = "Waiting for Android to finish starting";
+   _viewModel.StartupTiming = "About 12s remaining · 18s elapsed";
+   for (var step = 0; step < 4; step++) _viewModel.StartupSteps[step].State = step < 2 ? "Complete" : step == 2 ? "Current" : "Waiting";
+   UpdateLayout(); await Task.Delay(300); CaptureShell(previewDirectory, "startup-1440");
+   Width = 850; Height = 600; UpdateLayout(); UpdateWorkspaceLayout(); UpdateLayout(); CaptureShell(previewDirectory, "startup-850");
+   _viewModel.IsStarting = false; Width = 1440; Height = 900; UpdateLayout(); UpdateWorkspaceLayout();
+  }
   for (var i = 1; i < ShellNavigation.Items.Count; i++)
   {
    ShellNavigation.SelectedIndex = i; UpdateLayout();
@@ -260,10 +299,8 @@ public partial class MainWindow : Window
   if (previewDirectory is not null) CaptureShell(previewDirectory, "import-error");
   _viewModel.OperationError = "";
   return new { pages, themeSwitchApplied = switched, adaptiveLayoutVerified, operationErrorPresented, minimumBoundsRestored = Width >= MinWidth && Height >= MinHeight,
-   setupCheckComplete = !string.IsNullOrWhiteSpace(_desktop.SetupReport) && !_desktop.SetupBusy,
+   setupCheckComplete = !string.IsNullOrWhiteSpace(_desktop.SetupReport) && !_desktop.SetupBusy, viewportRetainedAcrossNavigation,
    isolatedProfileAdded = added, profileSwitched = switchedProfile, defaultProfileRestored = defaultRestored, conflictingProfileCommandsBlocked = conflictingCommandsBlocked,
    backupRequiresGracefulShutdown = backupRequiresShutdown };
  }
 }
-
-

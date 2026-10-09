@@ -25,6 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="AndroidDesktop.Tests" />
+    <Protobuf Include="Protocols/emulator_controller.proto" GrpcServices="Client" />
     <Content Include="Assets/Viewport/**/*" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

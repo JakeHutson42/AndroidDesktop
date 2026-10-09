@@ -46,7 +46,9 @@ public partial class PrototypeViewModel : ObservableObject
     {
         _session = session; _viewport = viewport; _evidence = evidence;
         State = DisplayState(session.State);
-        session.StateChanged += s => OnUi(() => { State = DisplayState(s); if (s == SessionState.Faulted) { InputReady = false; ReleaseAllInput(); } NotifyCommands(); });
+        session.StateChanged += s => OnUi(() => { State = DisplayState(s); if (s == SessionState.Starting) BeginStartup(); if (s == SessionState.Faulted) { EndStartup(false); InputReady = false; ReleaseAllInput(); } NotifyCommands(); });
+        session.StartupStage += stage => OnUi(() => SetStartupStage(stage));
+        session.PrepareNativeDisplay = viewport is WebRtcViewport native ? native.PrepareNativeAsync : null;
         session.Message += text => OnUi(() => AddMessage(text));
         evidence.Failed += text => OnUi(() => AddMessage(text));
         viewport.Message += Receive;
@@ -71,7 +73,7 @@ public partial class PrototypeViewModel : ObservableObject
         if (dispatcher is null || dispatcher.CheckAccess()) action(); else dispatcher.BeginInvoke(action);
     }
     partial void OnBusyChanged(bool value) => NotifyCommands();
-    partial void OnInputReadyChanged(bool value) { NotifyCommands(); if (!value) { AudioStatus = "Audio off"; DisplayDetails = "Display not connected"; } if (!value && (RecordingActive || PlaybackActive)) _ = AutomationCallbackAsync(() => AbortAutomationAsync("Input connection unavailable")); }
+    partial void OnInputReadyChanged(bool value) { NotifyCommands(); if (value) EndStartup(true); if (!value) { AudioStatus = "Audio off"; DisplayDetails = "Display not connected"; } if (!value && (RecordingActive || PlaybackActive)) _ = AutomationCallbackAsync(() => AbortAutomationAsync("Input connection unavailable")); }
     private void NotifyCommands()
     {
         StartCommand.NotifyCanExecuteChanged(); ConnectCommand.NotifyCanExecuteChanged();
@@ -106,8 +108,9 @@ public partial class PrototypeViewModel : ObservableObject
         var picker = new OpenFileDialog { Filter = "Android apps (*.apk;*.apkm)|*.apk;*.apkm", Multiselect = false };
         if (picker.ShowDialog() == true) await RunAsync(ct => OpenAsync(picker.FileName, false, ct, package), token);
     }
-    private bool CanSend() => CanOpen() && InputReady && _session.HasOwnedEmulator && _session.State is SessionState.Ready or SessionState.Running;
-    private bool CanEnableAudio() => CanLiveInput();
+    private bool CanSend() => _session.Options.DisplayTransport != "native" && CanOpen() && InputReady && _session.HasOwnedEmulator && _session.State is SessionState.Ready or SessionState.Running;
+    private bool CanRotate() => _session.Options.DisplayTransport == "native" ? CanLiveInput() : CanSend();
+    private bool CanEnableAudio() => _session.Options.DisplayTransport != "native" && CanLiveInput();
     private bool CanStop() => !Busy && !_closing && _session.HasOwnedProcessHandles;
     private bool CanForceStop() => !Busy && !_closing && _session.ForceStopAvailable;
     private static string DisplayState(SessionState state) => state == SessionState.NotConfigured ? "Not configured" : state.ToString();
@@ -124,7 +127,7 @@ public partial class PrototypeViewModel : ObservableObject
             System.Diagnostics.Debug.WriteLine("Android Desktop operation failed:\n" + error);
             _evidence.TryWrite("operationError", new { type = error.GetType().FullName, message = error.Message, detail = error.ToString() });
         }
-        finally { _active.Dispose(); _active = null; Busy = false; }
+        finally { if (IsStarting && !InputReady) EndStartup(false); _active.Dispose(); _active = null; Busy = false; }
     }
     [RelayCommand(CanExecute = nameof(CanStart), IncludeCancelCommand = true)]
     private Task StartAsync(CancellationToken token) => RunAsync(async ct => {
@@ -134,7 +137,16 @@ public partial class PrototypeViewModel : ObservableObject
     }, token);
     private async Task ConnectDisplayAsync(CancellationToken token)
     {
-        InputReady = false; _viewport.Send("cancel"); await _viewport.DisconnectAsync();
+        InputReady = false; _viewport.Send("cancel");
+        if (_session.Options.DisplayTransport != "native") await _viewport.DisconnectAsync();
+        SetStartupStage(3);
+        if (_session.Options.DisplayTransport == "native") {
+            AddMessage("Attaching the owned native emulator window…");
+            var nativeConnection = await _session.NativeInputConnectionAsync(token);
+            await _viewport.ConnectAsync(nativeConnection.Port, nativeConnection.Token, token);
+            DisplayDetails = "Native display · experimental";
+            return;
+        }
         await _session.ConnectGatewayAsync(token); var connection = _session.Connection;
         AddMessage("Connecting Android display…"); await _viewport.ConnectAsync(connection.Port, connection.Token, token);
     }
@@ -171,7 +183,7 @@ public partial class PrototypeViewModel : ObservableObject
     private Task LaunchAsync(CancellationToken token) => RunAsync(ct => OpenAsync(Selection!.Apk.Path, false, ct), token);
     [RelayCommand(CanExecute = nameof(CanLaunch), IncludeCancelCommand = true)]
     private Task RelaunchAsync(CancellationToken token) => RunAsync(ct => OpenAsync(Selection!.Apk.Path, true, ct), token);
-    [RelayCommand(CanExecute = nameof(CanSend), IncludeCancelCommand = true)]
+    [RelayCommand(CanExecute = nameof(CanRotate), IncludeCancelCommand = true)]
     private Task RotateAsync(CancellationToken token) => RunAsync(async ct => {
         _viewport.Send("cancel"); var next = (_degrees + 90) % 360;
         await _session.RotateAsync(next, ct); _degrees = next; _viewport.Send("rotation", _degrees);
@@ -202,12 +214,16 @@ public partial class PrototypeViewModel : ObservableObject
     private Task StopAsync() => RunAsync(async ct => {
         await AbortAutomationAsync("Device stopping");
         AddMessage("Stopping Android gracefully…"); _viewport.Send("cancel"); InputReady = false;
-        await _viewport.DisconnectAsync(); await _session.StopAsync(ct);
+        if (_viewport is WebRtcViewport display && display.NativeHost is { } nativeHost) { nativeHost.Suspend(); await nativeHost.DisconnectInputAsync(); }
+        if (_session.Options.DisplayTransport != "native") await _viewport.DisconnectAsync();
+        await _session.StopAsync(ct);
+        if (_session.Options.DisplayTransport == "native") await _viewport.DisconnectAsync();
     }, CancellationToken.None);
     [RelayCommand(CanExecute = nameof(CanForceStop))]
     private Task ForceStopAsync() => RunAsync(async ct => {
         await AbortAutomationAsync("Device forcibly stopping");
-        _viewport.Send("cancel"); InputReady = false; await _viewport.DisconnectAsync(); await _session.ForceStopAsync(ct);
+        _viewport.Send("cancel"); InputReady = false; if (_viewport is WebRtcViewport display && display.NativeHost is { } nativeHost) { nativeHost.Suspend(); await nativeHost.DisconnectInputAsync(); }
+        await _session.ForceStopAsync(ct); await _viewport.DisconnectAsync();
     }, CancellationToken.None);
     public async Task<bool> CloseAsync()
     {

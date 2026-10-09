@@ -44,7 +44,8 @@ public sealed record PrototypeOptions
             new[] { GrpcPort, GatewayPort }.Any(p => p == EmulatorPort || p == EmulatorPort + 1))
             throw new InvalidDataException("Use distinct, non-reserved emulator, gRPC and gateway ports.");
         if (ViewportMode is not ("standard" or "composition")) throw new InvalidDataException("ViewportMode must be standard or composition.");
-        if (DisplayTransport is not ("webrtc" or "controller")) throw new InvalidDataException("Unsupported display transport.");
+        if (DisplayTransport is not ("webrtc" or "controller" or "native")) throw new InvalidDataException("Unsupported display transport.");
+        if (DisplayTransport == "native" && ShowStandaloneWindow) throw new InvalidDataException("Native embedded display and standalone window are separate modes.");
         if (!System.Text.RegularExpressions.Regex.IsMatch(AvdName, "^[A-Za-z0-9_-]+$")) throw new InvalidDataException("Invalid AVD name.");
         if (MemoryMb is < 512 or > 8192 || CpuCores is < 1 or > 8)
             throw new InvalidDataException("Use 512–8192 MiB guest RAM and 1–8 virtual CPU cores. Blank preserves the existing AVD configuration.");

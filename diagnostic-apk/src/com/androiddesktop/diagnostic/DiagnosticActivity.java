@@ -50,7 +50,7 @@ public final class DiagnosticActivity extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_FULLSCREEN);
         savedTouches = getPreferences(MODE_PRIVATE).getLong("touches",0); touches = savedTouches;
         tone = new ToneGenerator(AudioManager.STREAM_MUSIC,60);
-        view = new DiagnosticView(); setContentView(view);
+        view = new DiagnosticView(); setContentView(view); view.requestFocus();
         log("created", "{\"savedTouches\":" + savedTouches + "}");
     }
     @Override public void onResume() { super.onResume(); resumed=true; Choreographer.getInstance().postFrameCallback(frames); }
@@ -66,7 +66,7 @@ public final class DiagnosticActivity extends Activity {
     }
     private final class DiagnosticView extends View {
         final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        DiagnosticView() { super(DiagnosticActivity.this); setFocusable(true); }
+        DiagnosticView() { super(DiagnosticActivity.this); setFocusable(true); setFocusableInTouchMode(true); }
         @Override public boolean onTouchEvent(MotionEvent event) {
             try {
                 JSONObject result = new JSONObject(); JSONArray points = new JSONArray();
